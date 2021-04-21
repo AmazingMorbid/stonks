@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  stonks-scraper:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    container_name: stonks-scraper
+

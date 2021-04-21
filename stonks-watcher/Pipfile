@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+apscheduler = "*"
+mkdocs = "*"
+scrapy = "*"
+stonks-types = {editable = true, path = "./../stonks-types"}
+olx-sdk = {editable = true, path = "./../olx-sdk"}
+allegro-sdk = {editable = true, path = "./../allegro-sdk"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
