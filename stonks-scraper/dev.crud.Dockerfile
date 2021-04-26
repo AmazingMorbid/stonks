@@ -2,7 +2,7 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY Pipfile Pipfile.lock ./
+COPY ./stonks-scraperPipfile Pipfile.lock ./
 COPY libs/ ./libs
 
 CMD ["ls"]

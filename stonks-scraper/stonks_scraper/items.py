@@ -15,6 +15,7 @@ class OlxOfferItem(Item):
     deliveries = Field()
 
     photos = Field()
+    is_active = Field()
 
     last_refresh_time = Field()
     last_scraped_time = Field()

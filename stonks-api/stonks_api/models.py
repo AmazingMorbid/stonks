@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
 
 Base = declarative_base()
@@ -48,6 +48,7 @@ class Offer(Base):
     deliveries = relationship("Delivery", back_populates="offer")
 
     photos = Column(ARRAY(String))
+    is_active = Column(Boolean, nullable=False)
 
     last_refresh_time = Column(DateTime)
     last_scraped_time = Column(DateTime, nullable=False)
@@ -67,3 +68,4 @@ class Stonks(Base):
     high_price = Column(Numeric(15, 4), nullable=False)
     average_price = Column(Numeric(15, 4), nullable=False)
     median_price = Column(Numeric(15, 4), nullable=False)
+    harmonic_price = Column(Numeric(15, 4), nullable=False)

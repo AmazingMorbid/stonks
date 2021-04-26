@@ -1,12 +1,9 @@
-from decimal import Decimal
-
 from pydantic import BaseModel, Field
 
 
 class FeeBase(BaseModel):
-    stonks_id: int
     title: str = Field(..., example="Przewalutowanie")
-    amount: Decimal = Field(..., example=10.5)
+    amount: float = Field(..., example=10.5)
     currency: str = Field(..., example="PLN")
 
 

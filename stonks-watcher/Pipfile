@@ -11,6 +11,9 @@ scrapy = "*"
 stonks-types = {editable = true, path = "./../stonks-types"}
 olx-sdk = {editable = true, path = "./../olx-sdk"}
 allegro-sdk = {editable = true, path = "./../allegro-sdk"}
+sentry-sdk = "==0.10.2"
+pytz = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

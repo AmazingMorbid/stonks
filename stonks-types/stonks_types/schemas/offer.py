@@ -15,6 +15,7 @@ class OfferBase(BaseModel):
     price: float = Field(..., example=500.59)
     currency: str = Field(..., example="PLN")
     photos: List[str] = Field([])
+    is_active: bool
     last_refresh_time: Optional[datetime] = Field(None, example=datetime.now())
     last_scraped_time: datetime = Field(..., example=datetime.now())
 

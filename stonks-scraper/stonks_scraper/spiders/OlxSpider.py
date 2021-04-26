@@ -1,8 +1,11 @@
 from datetime import datetime
 from typing import List
 
+import pytz as pytz
 import scrapy
 from olx_sdk import OLX
+from olx_sdk.models import Offer as OlxOffer
+from olx_sdk.models import Status as OlxOfferStatus
 from scrapy.exceptions import CloseSpider
 from scrapy.http import HtmlResponse
 
@@ -56,7 +59,7 @@ class OlxSpider(scrapy.Spider):
             url = offer.xpath('div/table/tbody/tr[1]/td[2]/div/h3/a/@href').get()
 
             if url is None:
-                raise CloseSpider(f"{self.LOG_TAG}: Offer url is None.")
+                raise CloseSpider(reason=f"{self.LOG_TAG}: Offer url is None.")
 
             request = scrapy.Request(
                 url,
@@ -80,12 +83,12 @@ class OlxSpider(scrapy.Spider):
             offer_id = response.xpath('//ul[@class="offer-bottombar__items"]/li[3]//strong/text()').get()
 
         if offer_id is None:
-            raise CloseSpider(f"{self.LOG_TAG}: Offer id is None.")
+            raise CloseSpider(reason=f"{self.LOG_TAG}: Offer id is None.")
 
         try:
-            offer = self.olx.offers.get_details(offer_id)
+            offer: OlxOffer = self.olx.offers.get_details(offer_id)
         except Exception as e:
-            raise CloseSpider(repr(e))
+            raise CloseSpider(reason=repr(e))
 
         else:
             offer_dict = offer.dict()
@@ -95,7 +98,8 @@ class OlxSpider(scrapy.Spider):
                 offer_item[key] = offer_dict[key]
 
             offer_item["id"] = f"olx-{offer.id}"
-            offer_item["category"] = "telefony-komorkowe"
+            offer_item["category"] = "smartphones"
+            offer_item["is_active"] = offer.status == OlxOfferStatus.active
 
             if offer.delivery.active:
                 offer_item["deliveries"] = [
@@ -105,6 +109,6 @@ class OlxSpider(scrapy.Spider):
                 ]
 
             offer_item["photos"] = [photo.link for photo in offer.photos]
-            offer_item["last_scraped_time"] = datetime.utcnow()
+            offer_item["last_scraped_time"] = datetime.now(pytz.utc)
 
             return offer_item

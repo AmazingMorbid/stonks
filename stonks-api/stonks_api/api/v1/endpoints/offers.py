@@ -8,7 +8,7 @@ from starlette.responses import JSONResponse
 
 from stonks_types import schemas
 
-from stonks_api.crud import crud_offers, crud_delivery
+from stonks_api.crud import crud_offers, crud_delivery, crud_stonks
 from stonks_api.database import get_db
 
 router = APIRouter()

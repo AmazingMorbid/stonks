@@ -8,9 +8,17 @@ sidebar_position: 2
 
 ## Environmental variables
 
-`API_URL`
+`API_URL` (required)
 
 This is the URL that will be used to communicate with an API.
+
+`ALLEGRO_CLIENT_ID` (required)
+
+Client ID of registered allegro api app.
+
+`ALLEGRO_CLIENT_SECRET` (required)
+
+Client secret of registered allegro api app.
 
 `OFFER_UPDATE_INTERVAL` (Default: ```1```)  
 
@@ -22,3 +30,8 @@ When an offer is updated, stonks-watcher will automatically look for possible st
 `OFFER_UPDATE_OLDER_THAN` (Default: ```30```)
 
 When stonks-watcher triggers offers update, it will ask the API for offers that are older than 30 minutes
+
+`SENTRY_DSN` (optional)
+
+You can use [Sentry](https://sentry.io) to log production errors. In Sentry, create project for **celery**
+and set `SENTRY_DSN` to your project's DSN.

@@ -20,7 +20,8 @@ data_offer_create = schemas.OfferCreate(id="test_offer",
                                             "https://example.image.org"
                                         ],
                                         last_refresh_time=datetime.now(),
-                                        last_scraped_time=datetime.now())
+                                        last_scraped_time=datetime.now(),
+                                        is_active=True)
 deliveries: List[schemas.DeliveryCreate] = [
     schemas.DeliveryCreate(title="test delivery",
                            price=9.99,

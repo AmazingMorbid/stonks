@@ -1,0 +1,7 @@
+
+categories = {
+    "smartphones": {
+        "olx": ,
+        "allegro": ,
+    }
+}

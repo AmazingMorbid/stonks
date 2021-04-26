@@ -26,3 +26,4 @@ async def index():
 
 
 app.include_router(api_router, prefix="/v1")
+
