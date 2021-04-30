@@ -19,11 +19,13 @@ class OlxOffersPipeline:
         try:
             r = requests.post("http://localhost:8000/v1/offers",
                               data=offer.json(),
+                              params={"get_device_model": True},
                               headers={'Content-type': 'application/json'})
 
             if r.status_code == 409:
                 r = requests.put(f"http://localhost:8000/v1/offers/{offer.id}",
                                  data=offer.json(),
+                                 params={"get_device_model": True},
                                  headers={'Content-type': 'application/json'})
             r.raise_for_status()
 

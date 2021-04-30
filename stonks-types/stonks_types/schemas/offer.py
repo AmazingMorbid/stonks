@@ -12,6 +12,7 @@ class OfferBase(BaseModel):
     title: str = Field(..., example="Telefon pixel 3a")
     description: Optional[str] = Field(None, example="Sprzedam telefon pixel 3a")
     category: str = Field(..., example="smartphone")
+    device_model: Optional[str] = Field(None, example="pixel 3a")
     price: float = Field(..., example=500.59)
     currency: str = Field(..., example="PLN")
     photos: List[str] = Field([])

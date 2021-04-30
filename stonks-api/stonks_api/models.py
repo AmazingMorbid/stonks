@@ -41,6 +41,7 @@ class Offer(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     category = Column(String(32), nullable=False)
+    device_model = Column(String, nullable=True)
 
     price = Column(Numeric(15, 4), nullable=False)
     currency = Column(String(3), nullable=False)

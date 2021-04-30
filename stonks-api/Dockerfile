@@ -6,6 +6,9 @@ COPY ./stonks-api/Pipfile stonks-api/Pipfile.lock ./
 WORKDIR /app/stonks-types
 COPY ./stonks-types/ ./
 
+WORKDIR /app/device-recognizer
+COPY ./device-recognizer/ ./
+
 WORKDIR /app/stonks-api
 RUN pip install pipenv && \
     pipenv install --system --ignore-pipfile --dev && \

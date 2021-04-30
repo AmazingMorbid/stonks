@@ -14,6 +14,7 @@ aiohttp = "*"
 alembic = "*"
 stonks-types = {editable = true, path = "./../stonks-types"}
 sentry-sdk = "==0.10.2"
+spacy = "==2.3.5"
 
 [dev-packages]
 pytest = "*"

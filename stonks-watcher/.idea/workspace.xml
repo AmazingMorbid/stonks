@@ -2,64 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../olx-sdk/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_fees.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_stonks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-scraper/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-scraper/.idea/stonks-scraper.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-scraper/dev.crud.Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-types/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-types/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stonks_watcher/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stonks_watcher/category_mapper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tasks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../device-recognizer/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/device_recognizer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../allegro-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../allegro-sdk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/docs/stonks-watcher/configuration.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/docs/stonks-watcher/configuration.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../olx-sdk/olx_sdk/Olx.py" beforeDir="false" afterPath="$PROJECT_DIR$/../olx-sdk/olx_sdk/Olx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../olx-sdk/olx_sdk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../olx-sdk/olx_sdk/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/stonks.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/stonks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_stonks.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_stonks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_offers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_offers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/fee.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/fee.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/offer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/offer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/stonks.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/stonks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/device_recognizer.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apis.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapy.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/crontab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/dev.Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/start.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/tests/OlxSpiderTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/tests/test_files/OlxOffersList.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks-scraper/tests/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/items.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/olx.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/pipelines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/spiders/OlxSpider.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/spiders/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_scraper/utils/converters.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stonks-types" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stonks-api" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -167,6 +116,7 @@
       <workItem from="1619195781615" duration="2677000" />
       <workItem from="1619216436702" duration="11676000" />
       <workItem from="1619339329624" duration="20614000" />
+      <workItem from="1619808179622" duration="26000" />
     </task>
     <servers />
   </component>
