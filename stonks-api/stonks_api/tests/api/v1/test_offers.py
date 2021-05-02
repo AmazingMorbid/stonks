@@ -8,6 +8,7 @@ from stonks_types import schemas
 
 from stonks_api import models
 from stonks_api.database import SessionLocal
+from stonks_api.tests.utils import delete_offers, delete_devices
 
 data_offer_create = schemas.OfferCreate(id="test_offer",
                                         url="https://example.org",
@@ -27,13 +28,6 @@ deliveries: List[schemas.DeliveryCreate] = [
                            price=9.99,
                            currency="PLN")
 ]
-
-
-def delete_offers():
-    db: Session = SessionLocal()
-    db.query(models.Offer).delete()
-    db.commit()
-    db.close()
 
 
 # CREATE OFFER
@@ -127,8 +121,11 @@ def test_delete_offer(client: TestClient):
 
     assert r.status_code == 200
     assert r.json() == {
-        "detail": "Offer had been deleted"
+        "detail": "Offer has been deleted"
     }
+
+    r = client.get(f"/v1/offers")
+    assert len(r.json()) == 0
 
 
 def test_delete_offer_not_found(client: TestClient):
@@ -260,8 +257,37 @@ def test_delete_deliveries(client: TestClient):
     assert r.status_code == 200
     assert r.json() == {"message": f"Deliveries for offer test_offer had been deleted."}
 
+    r = client.get(f"/v1/offers/test_offer/deliveries")
+    assert len(r.json()) == 0
+
 
 def test_delete_deliveries_offer_not_found(client: TestClient):
     r = client.delete(f"/v1/offers/THIS DOES NOT EXIST/deliveries")
 
     assert r.status_code == 404
+
+
+def test_create_offer_with_device(client: TestClient):
+    delete_offers()
+    delete_devices()
+
+    data_offer_create.device = "test device"
+    device = schemas.DeviceCreate(name=data_offer_create.device)
+
+    client.post(f"/v1/devices/", data=device.json())
+    r = client.post(f"/v1/offers/", data=data_offer_create.json())
+
+    assert r.status_code == 201
+    #                                merge dicts, replacing price for None
+    assert schemas.DeviceCreate(**r.json()["device"] | {"price": None}) == device
+
+
+def test_create_offer_with_device_not_found(client: TestClient):
+    data_offer_create.id = "ADLNAJKDNJKAD"
+    data_offer_create.device = "THIS DOES NOT EXIST"
+    r = client.post(f"/v1/offers/", data=data_offer_create.json())
+
+    assert r.status_code == 404
+    assert r.json() == {
+        "detail": "Device not found."
+    }

@@ -11,6 +11,7 @@ pydantic = "*"
 stonks-types = {editable = true, path = "./../stonks-types"}
 sentry-sdk = "==0.10.2"
 pytz = "*"
+celery = "*"
 
 [dev-packages]
 

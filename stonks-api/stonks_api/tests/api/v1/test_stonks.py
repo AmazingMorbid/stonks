@@ -7,14 +7,7 @@ from stonks_types import schemas
 
 from stonks_api import models
 from stonks_api.database import SessionLocal
-
-
-def delete_stonks():
-    db: Session = SessionLocal()
-    db.query(models.Stonks).delete()
-    db.commit()
-    db.close()
-
+from stonks_api.tests.utils import delete_stonks
 
 fees: List[schemas.FeeCreate] = [
     schemas.FeeCreate(title="test fee",
@@ -89,6 +82,9 @@ def test_delete_stonks(client: TestClient):
     assert r.json() == {
         "detail": "Stonks has been deleted."
     }
+
+    r = client.get(f"/v1/stonks/{stonks_response.id}")
+    assert r.status_code == 404
 
 
 def test_delete_stonks_not_found(client: TestClient):

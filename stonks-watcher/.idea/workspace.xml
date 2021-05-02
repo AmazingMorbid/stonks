@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../device-recognizer/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/device_recognizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stonks-scraper/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stonks-scraper/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../allegro-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../allegro-sdk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/device_recognizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/Pipfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +43,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stonks-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -117,6 +116,7 @@
       <workItem from="1619216436702" duration="11676000" />
       <workItem from="1619339329624" duration="20614000" />
       <workItem from="1619808179622" duration="26000" />
+      <workItem from="1619818114796" duration="1336000" />
     </task>
     <servers />
   </component>

@@ -42,3 +42,4 @@ def create(db: Session,
 def delete_one(db: Session,
                stonks_id: int):
     db.query(models.Stonks).filter(models.Stonks.id == stonks_id).delete()
+    db.commit()

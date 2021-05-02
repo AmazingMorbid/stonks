@@ -8,8 +8,9 @@ from starlette.responses import JSONResponse
 
 from stonks_types import schemas
 
-from stonks_api.api.v1.endpoints.device_recognizer import device_recognizer
-from stonks_api.crud import crud_offers, crud_delivery, crud_stonks
+# from stonks_api.api.v1.endpoints.device_recognizer import device_recognizer
+from stonks_api.api.v1.endpoints.devices import device_not_found
+from stonks_api.crud import crud_offers, crud_delivery, crud_devices
 from stonks_api.database import get_db
 
 router = APIRouter()
@@ -62,8 +63,15 @@ def create_offer(offer: schemas.OfferCreate,
         raise HTTPException(status_code=409, detail="Offer already exists. Consider using upsert route.")
 
     # if get_device_model is True get device model and set it
-    if get_device_model:
-        offer.device_model = device_recognizer.get_info(offer.title).model
+    # if get_device_model:
+    #     model = device_recognizer.get_info(offer.title).model.lower()
+    #     offer.device_model = model if len(model) > 2 else None
+
+    if offer.device is not None:
+        device = crud_devices.get_one_by_name(db=db,
+                                              device_name=offer.device)
+
+        device_not_found(device)
 
     db_offer = crud_offers.create_offer(db, offer)
 
@@ -84,8 +92,9 @@ def update_offer(offer_id: str,
     offer_not_found(db_offer)
 
     # if get_device_model is True get device model and set it
-    if get_device_model:
-        offer.device_model = device_recognizer.get_info(offer.title).model
+    # if get_device_model:
+    #     model = device_recognizer.get_info(offer.title).model.lower()
+    #     offer.device_model = model if len(model) > 2 else None
 
     db_offer = crud_offers.update_offer(db, offer_id, offer)
 
@@ -99,7 +108,7 @@ def delete_offer(offer_id: str, db: Session = Depends(get_db)):
 
     crud_offers.delete_offer(db, offer_id)
 
-    return JSONResponse({"detail": "Offer had been deleted"})
+    return JSONResponse({"detail": "Offer has been deleted"})
 
 
 @router.get("/{offer_id}/deliveries", response_model=List[schemas.Delivery])

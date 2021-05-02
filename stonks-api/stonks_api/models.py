@@ -41,7 +41,8 @@ class Offer(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     category = Column(String(32), nullable=False)
-    device_model = Column(String, nullable=True)
+    device_name = Column(String, ForeignKey("device.name", ondelete="SET NULL"), nullable=True)
+    device = relationship("Device", back_populates="offer", uselist=False)
 
     price = Column(Numeric(15, 4), nullable=False)
     currency = Column(String(3), nullable=False)
@@ -70,3 +71,23 @@ class Stonks(Base):
     average_price = Column(Numeric(15, 4), nullable=False)
     median_price = Column(Numeric(15, 4), nullable=False)
     harmonic_price = Column(Numeric(15, 4), nullable=False)
+
+
+class Device(Base):
+    __tablename__ = "device"
+
+    name = Column(String, primary_key=True, nullable=False)
+    price = relationship("Price", back_populates="device")
+    offer = relationship("Offer", back_populates="device")
+
+
+class Price(Base):
+    __tablename__ = "price"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    device_name = Column(String, ForeignKey("device.name", ondelete="CASCADE"), nullable=False)
+    source = Column(String(32), nullable=False)
+    price = Column(Numeric(15, 4), nullable=False)
+    currency = Column(String(3), nullable=False)
+
+    device = relationship("Device", back_populates="price")

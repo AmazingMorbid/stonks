@@ -1,10 +1,9 @@
 from datetime import datetime
-from decimal import Decimal
 from typing import Optional, List
 
 from pydantic import BaseModel, Field
 
-from stonks_types.schemas import DeliveryCreate, Delivery
+from stonks_types.schemas import DeliveryCreate, Delivery, DeviceCreate, Device
 
 
 class OfferBase(BaseModel):
@@ -12,7 +11,6 @@ class OfferBase(BaseModel):
     title: str = Field(..., example="Telefon pixel 3a")
     description: Optional[str] = Field(None, example="Sprzedam telefon pixel 3a")
     category: str = Field(..., example="smartphone")
-    device_model: Optional[str] = Field(None, example="pixel 3a")
     price: float = Field(..., example=500.59)
     currency: str = Field(..., example="PLN")
     photos: List[str] = Field([])
@@ -24,15 +22,17 @@ class OfferBase(BaseModel):
 class OfferCreate(OfferBase):
     id: str
     deliveries: Optional[List[DeliveryCreate]] = None
+    device: Optional[str] = None
 
 
 class OfferUpdate(OfferBase):
-    pass
+    device: Optional[str] = None
 
 
 class Offer(OfferBase):
     id: str
     deliveries: List[Delivery] = []
+    device: Device = None
 
     class Config:
         orm_mode = True
