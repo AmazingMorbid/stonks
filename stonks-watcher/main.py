@@ -36,66 +36,80 @@
 import json
 import statistics
 import time
+from datetime import timedelta
 from typing import List
 
 import requests
 from olx_sdk.models import Offer as OlxOffer
 from pydantic import parse_obj_as
-from stonks_types.schemas import Offer, Fee, FeeCreate, StonksCreate
+from stonks_types.schemas import Offer, Fee, FeeCreate, StonksCreate, Device
 
-from config import olx
+from config import olx, API_URL, config
 
 # with open("olx_offer.json", "r") as f:
 #     offer = OlxOffer(**json.load(f))
 
-offer_response = requests.get(f"http://localhost:8000/v1/offers/")
-offers: List[Offer] = parse_obj_as(List[Offer], offer_response.json())
+# offer_response = requests.get(f"http://localhost:8000/v1/offers/")
+# offers: List[Offer] = parse_obj_as(List[Offer], offer_response.json())
+#
+# from config import allegro
+#
+# broken_flags = "-uszko* -pęknię*"
+#
+# for offer in offers:
+#     time.sleep(1)
+#     allegro_offers = allegro.offers.listing(**{"category.id": 165,
+#                                                "phrase": f"{offer.title} {broken_flags}",
+#                                                "include": ["-all", "items"],
+#                                                "sellingMode.format": "BUY_NOW",
+#                                                "limit": 60,
+#                                                "sort": "+price",
+#                                                "offset": 0,
+#                                                "parameter.11323": "11323_2",
+#                                                "fallback": False})
+#
+#     if len(allegro_offers) > 0:
+#         prices = [allegro_offer.sellingMode.price.amount for allegro_offer in allegro_offers]
+#
+#         harmonic_price = statistics.harmonic_mean(prices)
+#
+#         sell_fee = FeeCreate(title="Opłata od sprzedaży",
+#                              amount=0.045 * harmonic_price,
+#                              currency="PLN")
+#
+#         total_buy = offer.price
+#
+#         if len(offer.deliveries) > 0:
+#             total_buy += offer.deliveries[0].price
+#         else:
+#             total_buy += 15
+#
+#         total_sell = harmonic_price - sell_fee.amount
+#
+#         if total_sell > total_buy:
+#             stonks = StonksCreate(low_price=min(prices),
+#                                   high_price=max(prices),
+#                                   median_price=statistics.median(prices),
+#                                   average_price=statistics.mean(prices),
+#                                   harmonic_price=harmonic_price,
+#                                   fees=[sell_fee]
+#                                   )
+#
+#             r = requests.post(f"http://localhost:8000/v1/offers/{offer.id}/stonks", data=stonks.json())
+#
+#             print(r.json())
+#             print(r.status_code)
+#
+from stonks_watcher.utils import older_than_datetime_iso
 
-from config import allegro
+params = {"older_than": older_than_datetime_iso(timedelta(days=config["prices"]["update_older_than"])),
+          "limit": config["prices"]["update_count"]}
 
-broken_flags = "-uszko* -pęknię*"
+try:
+    r = requests.get(f"{API_URL}/v1/devices", params=params)
+    print("Downloaded old devices.")
+    devices: List[Device] = parse_obj_as(List[Device], r.json())
+    print(devices)
 
-for offer in offers:
-    time.sleep(1)
-    allegro_offers = allegro.offers.listing(**{"category.id": 165,
-                                               "phrase": f"{offer.title} {broken_flags}",
-                                               "include": ["-all", "items"],
-                                               "sellingMode.format": "BUY_NOW",
-                                               "limit": 60,
-                                               "sort": "+price",
-                                               "offset": 0,
-                                               "parameter.11323": "11323_2",
-                                               "fallback": False})
-
-    if len(allegro_offers) > 0:
-        prices = [allegro_offer.sellingMode.price.amount for allegro_offer in allegro_offers]
-
-        harmonic_price = statistics.harmonic_mean(prices)
-
-        sell_fee = FeeCreate(title="Opłata od sprzedaży",
-                             amount=0.045 * harmonic_price,
-                             currency="PLN")
-
-        total_buy = offer.price
-
-        if len(offer.deliveries) > 0:
-            total_buy += offer.deliveries[0].price
-        else:
-            total_buy += 15
-
-        total_sell = harmonic_price - sell_fee.amount
-
-        if total_sell > total_buy:
-            stonks = StonksCreate(low_price=min(prices),
-                                  high_price=max(prices),
-                                  median_price=statistics.median(prices),
-                                  average_price=statistics.mean(prices),
-                                  harmonic_price=harmonic_price,
-                                  fees=[sell_fee]
-                                  )
-
-            r = requests.post(f"http://localhost:8000/v1/offers/{offer.id}/stonks", data=stonks.json())
-
-            print(r.json())
-            print(r.status_code)
-
+except requests.exceptions.ConnectionError as e:
+    print("Could not connect to the API")

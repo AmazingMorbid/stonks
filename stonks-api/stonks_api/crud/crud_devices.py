@@ -28,6 +28,7 @@ def create_prices(db: Session,
 
 
 def create(db: Session, device: schemas.DeviceCreate) -> models.Device:
+    device.name = device.name.lower()
     device_dict = device.dict()
     device_dict.pop("price")
     db_device = models.Device(**device_dict)

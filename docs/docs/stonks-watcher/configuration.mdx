@@ -1,0 +1,103 @@
+---
+sidebar_position: 2
+---
+
+# Configuration
+
+import ConfigTable, {ConfigTableItem} from "../../src/components/ConfigTable";
+
+**stonks-watcher** can be configured using config file and environmental variables.
+Env var are labeled with (env) and are .
+
+## api_url
+
+<ConfigTable>
+  <ConfigTableItem
+    k="api_url"
+    required
+    t="String"
+    description="This is the URL that will be used to communicate with an API."
+  />
+</ConfigTable>
+
+## allegro
+
+This project requires [Allegro Developer App](https://apps.developer.allegro.pl/).
+Client ID and Client secret must be set as environment variables.
+
+<ConfigTable>
+  <ConfigTableItem
+    k="ALLEGRO_CLIENT_ID (env)"
+    required
+    t="String"
+    description="Client ID found in Developer Apps panel."
+  />
+  <ConfigTableItem
+    k="ALLEGRO_CLIENT_SECRET (env)"
+    required
+    t="String"
+    description="Client secret found in Developer Apps panel."
+  />
+
+</ConfigTable>
+
+## offers
+<ConfigTable>
+  <ConfigTableItem
+    k="update_interval"
+    d={1}
+    t="int [minutes]"
+    description="How often stonks-watcher should update offers."
+  />
+  <ConfigTableItem
+    k={"update_older_than"}
+    d={30}
+    t={"int [minutes]"}
+    description={"Update offers that are older than x minutes."}
+  />
+</ConfigTable>
+
+:::info update_interval
+Note that "outdated" does not mean an offer has expired, but the database copy of that offer did.
+Updating means re-downloading this offer from the internet and updating the stonks database.
+:::
+## prices
+
+<ConfigTable>
+  <ConfigTableItem
+    k={"update_interval"}
+    d={1}
+    t={"int [minutes]"}
+    description={"How often stonks-watcher will update price of devices."}
+  />
+  <ConfigTableItem
+    k={"update_count"}
+    d={6}
+    t={"int"}
+    description={"How many prices to update per task run."}
+  />
+  <ConfigTableItem
+    k={"update_older_than"}
+    d={7}
+    t={"int [days]"}
+    description={"Only update prices that are older than specified."}
+  />
+</ConfigTable>
+
+:::caution
+Setting update_interval below 1 or update_count above 6 may result in 29 Too Many Requests error from Allegro.
+:::
+
+## Sentry
+
+You can use [Sentry](https://sentry.io) to log production errors. In Sentry, create project for **celery**
+and set `SENTRY_DSN` to your project's DSN.
+
+<ConfigTable>
+  <ConfigTableItem
+    k={"SENTRY_DSN (env)"}
+    t={"String"}
+    description={"Sentry DSN"}
+  />
+</ConfigTable>
+

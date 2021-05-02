@@ -62,6 +62,7 @@ def create_offer(offer: schemas.OfferCreate,
     if db_offer is not None:
         raise HTTPException(status_code=409, detail="Offer already exists. Consider using upsert route.")
 
+
     # if get_device_model is True get device model and set it
     # if get_device_model:
     #     model = device_recognizer.get_info(offer.title).model.lower()

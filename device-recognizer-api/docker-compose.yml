@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: device-recogizer-api
+    restart: unless-stopped
+    ports:
+    - 8880:8000
+    volumes:
+    - ./:/app

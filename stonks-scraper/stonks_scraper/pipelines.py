@@ -6,7 +6,7 @@ from scrapy import Spider
 from scrapy.exceptions import CloseSpider
 
 from stonks_scraper.items import OlxOfferItem
-from stonks_types.schemas import OfferCreate
+from stonks_types.schemas import OfferCreate, DeviceCreate
 
 
 class OlxOffersPipeline:
@@ -16,16 +16,29 @@ class OlxOffersPipeline:
     def process_item(self, item: OlxOfferItem, spider: Spider):
         offer = OfferCreate(**dict(item))
 
+        # Get model for device
+        r = requests.get("http://localhost:8880/api/v1/get-info", params={"text": offer.title})
+
+        if r.status_code == 200:
+            device_info = r.json()
+
+            if device_info is not None and len(device_info) > 2:
+                device_model: str = device_info["model"].lower()
+                device = DeviceCreate(name=device_model)
+                r = requests.post("http://localhost:8000/v1/devices", data=device.json())
+
+                if r.status_code == 201 or r.status_code == 409:
+                    # If device was created successfully (or 409 already exists), assign it to the offer
+                    offer.device = device_model
+
         try:
             r = requests.post("http://localhost:8000/v1/offers",
                               data=offer.json(),
-                              params={"get_device_model": True},
                               headers={'Content-type': 'application/json'})
 
             if r.status_code == 409:
                 r = requests.put(f"http://localhost:8000/v1/offers/{offer.id}",
                                  data=offer.json(),
-                                 params={"get_device_model": True},
                                  headers={'Content-type': 'application/json'})
             r.raise_for_status()
 

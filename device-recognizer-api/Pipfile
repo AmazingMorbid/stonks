@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-spacy = "==2.3.5"
-pydantic = "*"
 fastapi = {extras = ["all"], version = "*"}
+pydantic = "*"
+spacy = "==2.3.5"
 
 [dev-packages]
 

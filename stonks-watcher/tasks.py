@@ -7,14 +7,15 @@ import requests
 from celery import Celery, group
 from pydantic import parse_obj_as
 
-from stonks_types.schemas import Offer, OfferUpdate
+from stonks_types.schemas import Offer, OfferUpdate, Device
 from olx_sdk.models import Offer as OlxOffer
 from olx_sdk.models import Status as OlxOfferStatus
 
 import sentry_sdk
 from sentry_sdk.integrations.celery import CeleryIntegration
 
-from config import API_URL, olx, OFFER_UPDATE_INTERVAL, OFFER_UPDATE_OLDER_THAN, allegro
+from config import olx, allegro, config, API_URL
+from stonks_watcher.utils import older_than_datetime_iso
 
 sentry_sdk.init(
     dsn='https://f1e132df10f04ba398e0750959149471@o577912.ingest.sentry.io/5733971',
@@ -39,9 +40,12 @@ app.config_from_object(CeleryConfig)
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(OFFER_UPDATE_INTERVAL,
+    sender.add_periodic_task(config["offers"]["update_interval"],
                              update_offers.s(),
-                             name="Every minute check for offers older than 30 minutes and update them")
+                             name="Update offers")
+    sender.add_periodic_task(config["prices"]["update_interval"],
+                             update_device_prices.s(),
+                             name="Update prices.")
 
 
 @app.task
@@ -59,7 +63,6 @@ def find_stonks(offer: Offer):
     if allegro_offers > 0:
         for allegro_offer in allegro_offers:
             print(allegro_offer.sellingMode)
-
 
 
 @app.task
@@ -82,14 +85,28 @@ def update_offer(offer: Offer):
 
 @app.task
 def update_offers():
-    older_than_datetime = (datetime.now(pytz.utc) - timedelta(minutes=OFFER_UPDATE_OLDER_THAN)).isoformat()
+    older_than = older_than_datetime_iso(timedelta(minutes=config["offers"]["update_older_than"]))
 
     try:
-        r = requests.get(f"{API_URL}/v1/offers", params={"older_than": older_than_datetime})
+        r = requests.get(f"{API_URL}/v1/offers", params={"older_than": older_than})
         logging.info("Downloaded old offers.")
         offers: List[Offer] = parse_obj_as(List[Offer], r.json())
 
         return group(update_offer.s(offer) for offer in offers)()
+
+    except requests.exceptions.ConnectionError as e:
+        logging.error("Could not connect to the API")
+
+
+@app.task
+def update_device_prices():
+    params = {"older_than": older_than_datetime_iso(timedelta(days=config["prices"]["update_older_than"])),
+              "limit": config["prices"]["update_count"]}
+
+    try:
+        r = requests.get(f"{API_URL}/v1/devices", params=params)
+        logging.info("Downloaded old devices.")
+        devices: List[Device] = parse_obj_as(List[Device], r.json())
 
     except requests.exceptions.ConnectionError as e:
         logging.error("Could not connect to the API")
