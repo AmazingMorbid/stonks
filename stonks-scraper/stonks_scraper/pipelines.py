@@ -1,5 +1,6 @@
 import json
 import logging
+from typing import Optional
 
 import requests
 from scrapy import Spider
@@ -20,16 +21,17 @@ class OlxOffersPipeline:
         r = requests.get("http://localhost:8880/api/v1/get-info", params={"text": offer.title})
 
         if r.status_code == 200:
-            device_info = r.json()
+            if (device_info := r.json()) is not None:
+                device_model: Optional[str] = device_info["model"]
 
-            if device_info is not None and len(device_info) > 2:
-                device_model: str = device_info["model"].lower()
-                device = DeviceCreate(name=device_model)
-                r = requests.post("http://localhost:8000/v1/devices", data=device.json())
+                if device_model is not None and len(device_model) > 2:
+                    device_model = device_model.lower()
+                    device = DeviceCreate(name=device_model)
+                    r = requests.post("http://localhost:8000/v1/devices", data=device.json())
 
-                if r.status_code == 201 or r.status_code == 409:
-                    # If device was created successfully (or 409 already exists), assign it to the offer
-                    offer.device = device_model
+                    if r.status_code == 201 or r.status_code == 409:
+                        # If device was created successfully (or 409 already exists), assign it to the offer
+                        offer.device = device_model
 
         try:
             r = requests.post("http://localhost:8000/v1/offers",

@@ -106,9 +106,9 @@
 #
 # #######################################################################################
 #
-from tasks import periodic_prices_update
-
-periodic_prices_update.delay()
+# from tasks import periodic_prices_update
+#
+# periodic_prices_update.delay()
 
 
 # from celery import chain, group
