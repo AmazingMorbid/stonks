@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from typing import List
 
 from fastapi import APIRouter, HTTPException
@@ -6,7 +7,7 @@ from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 from stonks_types import schemas
 
-from stonks_api.crud import crud_offers, crud_devices
+from stonks_api.crud import crud_devices
 from stonks_api.database import get_db
 
 router = APIRouter()
@@ -20,10 +21,12 @@ def device_not_found(device):
 @router.get("/", response_model=List[schemas.Device])
 def get_devices(limit: int = 500,
                 skip: int = 0,
+                last_price_update_before: datetime = None,
                 db: Session = Depends(get_db)):
     devices = crud_devices.get_many(db=db,
                                     limit=limit,
-                                    skip=skip)
+                                    skip=skip,
+                                    last_price_update_before=last_price_update_before)
 
     return devices
 
@@ -41,6 +44,22 @@ def create_device(device: schemas.DeviceCreate,
                                     device=device)
 
     return db_device
+
+
+@router.post("/{device_name}/prices", response_model=List[schemas.Price], status_code=201)
+def create_prices(device_name: str,
+                  prices: List[schemas.PriceCreate],
+                  db: Session = Depends(get_db)):
+    db_device = crud_devices.get_one_by_name(db=db,
+                                             device_name=device_name)
+    device_not_found(db_device)
+    db_prices = crud_devices.create_prices(db=db,
+                                           device_name=device_name,
+                                           prices=prices)
+    db_device.last_price_update = datetime.utcnow()
+    db.commit()
+
+    return db_prices
 
 
 @router.delete("/{device_name}")

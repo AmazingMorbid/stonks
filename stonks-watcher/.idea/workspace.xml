@@ -2,58 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/device-recognizer-api.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/api/api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/api/v1/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/api/v1/device_recognizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/device_recognizer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/device_recognizer/device_recognizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../device-recognizer-api/schemas.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../docs/.idea/docs.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../docs/docs/stonks-watcher/tasks.mdx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../docs/src/components/ConfigTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stonks_watcher/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beat.Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flowerconfig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../allegro-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../allegro-sdk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/.idea/device-recognizer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/.idea/device-recognizer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/dataset1.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/dataset1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/dataset1.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/dataset1.jsonl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/dataset_clicked_2.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/dataset_clicked_2.jsonl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/offers.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/offers.jsonl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/offers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/offers.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/offers_dataset2.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/offers_dataset2.jsonl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/test.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer/train.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/train.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/docs/stonks-watcher/configuration.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/docs/stonks-watcher/configuration.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/meta.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/meta.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/ner/cfg" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/ner/cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/ner/model" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/ner/model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/ner/moves" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/ner/moves" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/tokenizer" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/tokenizer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/vocab/key2row" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/vocab/key2row" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/vocab/lookups.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/vocab/lookups.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/vocab/strings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/vocab/strings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/offers_model/vocab/vectors" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/offers_model/vocab/vectors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/docs/stonks-watcher/tasks.mdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/devices.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_devices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/spiders/OlxSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/spiders/OlxSpider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/devices.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stonks_watcher/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/stonks_watcher/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +58,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../stonks-scraper" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="io.unthrottled.amii.config.ui.PluginSettingsUI" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -165,7 +132,8 @@
       <workItem from="1619808179622" duration="26000" />
       <workItem from="1619818114796" duration="1336000" />
       <workItem from="1619948033930" duration="5906000" />
-      <workItem from="1619967221707" duration="60000" />
+      <workItem from="1619967221707" duration="8797000" />
+      <workItem from="1620059245375" duration="16571000" />
     </task>
     <servers />
   </component>

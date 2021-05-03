@@ -109,6 +109,6 @@ class OlxSpider(scrapy.Spider):
                 ]
 
             offer_item["photos"] = [photo.link for photo in offer.photos]
-            offer_item["last_scraped_time"] = datetime.now(pytz.utc)
+            offer_item["last_scraped_time"] = datetime.utcnow()
 
             return offer_item

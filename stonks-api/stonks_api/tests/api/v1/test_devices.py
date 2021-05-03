@@ -3,11 +3,9 @@ from typing import List
 
 from fastapi.testclient import TestClient
 from pydantic import parse_obj_as, BaseModel
-from sqlalchemy.orm import Session
 from stonks_types import schemas
+from stonks_types.schemas import PriceCreate
 
-from stonks_api import models
-from stonks_api.database import SessionLocal
 from stonks_api.tests.utils import delete_devices
 
 device = schemas.DeviceCreate(name="test device",
@@ -23,6 +21,8 @@ def test_create_device(client: TestClient):
 
     print(r.json())
     assert r.status_code == 201
+    print(device)
+    print(schemas.DeviceCreate(**r.json()))
     assert schemas.DeviceCreate(**r.json()) == device
 
 
@@ -80,3 +80,29 @@ def test_create_device_without_prices(client: TestClient):
     assert r_json["price"] == []
     r_json.pop("price")
     assert schemas.DeviceCreate(**r_json) == device
+
+
+class _PricesCreate(BaseModel):
+    __root__: List[PriceCreate]
+
+
+def test_create_prices(client: TestClient):
+    prices: _PricesCreate = _PricesCreate(__root__=[
+        PriceCreate(source="test source",
+                    price=69,
+                    currency="PLN")
+    ])
+    r = client.post(f"/v1/devices/test device/prices", data=prices.json())
+
+    assert r.status_code == 201
+
+
+def test_create_prices_not_found(client: TestClient):
+    prices: _PricesCreate = _PricesCreate(__root__=[
+        PriceCreate(source="test source",
+                    price=69,
+                    currency="PLN")
+    ])
+    r = client.post(f"/v1/devices/THIS DOES NOT EXIST/prices", data=prices.json())
+
+    assert r.status_code == 404

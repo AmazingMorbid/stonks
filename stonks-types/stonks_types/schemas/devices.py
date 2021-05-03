@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
@@ -10,11 +11,16 @@ class PriceBase(BaseModel):
 
 
 class PriceCreate(PriceBase):
-    pass
+    date: datetime = datetime.utcnow()
+
+
+class PricesCreate(BaseModel):
+    __root__: List[PriceCreate]
 
 
 class Price(PriceBase):
     id: int
+    date: datetime
 
     class Config:
         orm_mode = True
@@ -28,8 +34,13 @@ class DeviceCreate(DeviceBase):
     price: Optional[List[PriceCreate]] = None
 
 
+class DeviceUpdate(DeviceBase):
+    price: Optional[List[PriceCreate]] = None
+
+
 class Device(DeviceBase):
     price: List[Price]
+    last_price_update: Optional[datetime] = None
 
     class Config:
         orm_mode = True

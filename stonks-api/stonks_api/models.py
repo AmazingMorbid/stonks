@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
@@ -77,6 +79,8 @@ class Device(Base):
     __tablename__ = "device"
 
     name = Column(String, primary_key=True, nullable=False)
+    last_price_update = Column(DateTime)
+
     price = relationship("Price", back_populates="device")
     offer = relationship("Offer", back_populates="device")
 
@@ -89,5 +93,5 @@ class Price(Base):
     source = Column(String(32), nullable=False)
     price = Column(Numeric(15, 4), nullable=False)
     currency = Column(String(3), nullable=False)
-
+    date = Column(DateTime, nullable=False, default=datetime.utcnow())
     device = relationship("Device", back_populates="price")

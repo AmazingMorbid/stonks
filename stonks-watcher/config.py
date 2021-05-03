@@ -23,6 +23,6 @@ config["ALLEGRO_CLIENT_SECRET"] = os.getenv("ALLEGRO_CLIENT_SECRET")
 if config["ALLEGRO_CLIENT_ID"] is None or config["ALLEGRO_CLIENT_SECRET"] is None:
     raise ValueError("ALLEGRO_CLIENT_ID and ALLEGRO_CLIENT_SECRET not specified.")
 
-# allegro = Allegro(config["ALLEGRO_CLIENT_ID"], config["ALLEGRO_CLIENT_SECRET"])
+allegro = Allegro(config["ALLEGRO_CLIENT_ID"], config["ALLEGRO_CLIENT_SECRET"])
 
 olx = OLX()
