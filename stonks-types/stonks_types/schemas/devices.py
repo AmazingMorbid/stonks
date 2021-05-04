@@ -15,7 +15,7 @@ class PriceCreate(PriceBase):
 
 
 class PricesCreate(BaseModel):
-    __root__: List[PriceCreate]
+    prices: List[PriceCreate]
 
 
 class Price(PriceBase):
@@ -31,16 +31,21 @@ class DeviceBase(BaseModel):
 
 
 class DeviceCreate(DeviceBase):
-    price: Optional[List[PriceCreate]] = None
+    # price: Optional[List[PriceCreate]] = None
+    pass
 
 
 class DeviceUpdate(DeviceBase):
-    price: Optional[List[PriceCreate]] = None
+    # price: Optional[List[PriceCreate]] = None
+    pass
 
 
 class Device(DeviceBase):
-    price: List[Price]
     last_price_update: Optional[datetime] = None
 
     class Config:
         orm_mode = True
+
+
+class Prices(BaseModel):
+    prices: List[Price]

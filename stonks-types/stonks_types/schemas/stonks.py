@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 from typing import List
@@ -17,12 +18,14 @@ class StonksBase(BaseModel):
 
 class StonksCreate(StonksBase):
     fees: List[FeeCreate]
+    created_at: datetime = datetime.utcnow()
 
 
 class Stonks(StonksBase):
     id: int
     offer: Offer
     fees: List[Fee]
+    created_at: datetime
 
     class Config:
         orm_mode = True

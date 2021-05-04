@@ -1,17 +1,12 @@
-from datetime import datetime
 from typing import List
 
 from fastapi.testclient import TestClient
-from pydantic import parse_obj_as, BaseModel
+from pydantic import parse_obj_as
 from stonks_types import schemas
-from stonks_types.schemas import PriceCreate
 
 from stonks_api.tests.utils import delete_devices
 
-device = schemas.DeviceCreate(name="test device",
-                              price=[schemas.PriceCreate(source="test source",
-                                                         price=100,
-                                                         currency="PLN")])
+device = schemas.DeviceCreate(name="test device")
 
 
 def test_create_device(client: TestClient):
@@ -46,6 +41,7 @@ def test_get_devices(client: TestClient):
     assert r.status_code == 200
 
     devices: List[schemas.Device] = parse_obj_as(List[schemas.Device], r.json())
+    print(r.json())
     assert schemas.DeviceCreate(**devices[0].dict()) == device
 
 
@@ -68,41 +64,3 @@ def test_delete_device_not_found(client: TestClient):
     assert r.json() == {
         "detail": "Device not found."
     }
-
-
-def test_create_device_without_prices(client: TestClient):
-    device.price = None
-    r = client.post(f"v1/devices/", data=device.json())
-
-    assert r.status_code == 201
-
-    r_json = r.json()
-    assert r_json["price"] == []
-    r_json.pop("price")
-    assert schemas.DeviceCreate(**r_json) == device
-
-
-class _PricesCreate(BaseModel):
-    __root__: List[PriceCreate]
-
-
-def test_create_prices(client: TestClient):
-    prices: _PricesCreate = _PricesCreate(__root__=[
-        PriceCreate(source="test source",
-                    price=69,
-                    currency="PLN")
-    ])
-    r = client.post(f"/v1/devices/test device/prices", data=prices.json())
-
-    assert r.status_code == 201
-
-
-def test_create_prices_not_found(client: TestClient):
-    prices: _PricesCreate = _PricesCreate(__root__=[
-        PriceCreate(source="test source",
-                    price=69,
-                    currency="PLN")
-    ])
-    r = client.post(f"/v1/devices/THIS DOES NOT EXIST/prices", data=prices.json())
-
-    assert r.status_code == 404

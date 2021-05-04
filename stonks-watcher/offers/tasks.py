@@ -11,14 +11,13 @@ from stonks_types.schemas import Offer, OfferUpdate
 
 from celeryapp import app
 from config import olx, config, API_URL
-from stonks_watcher.utils import older_than_datetime_iso
+from stonks_watcher.utils import older_than
 
 
 @app.task
 def periodic_offers_update():
-    older_than = older_than_datetime_iso(timedelta(minutes=config["offers"]["update_older_than"]))
     params = {
-        "older_than": older_than
+        "older_than": older_than(timedelta(minutes=config["offers"]["update_older_than"]))
     }
 
     try:
@@ -26,7 +25,12 @@ def periodic_offers_update():
         r.raise_for_status()
 
         offers: List[Offer] = parse_obj_as(List[Offer], r.json())
-        logging.info(f"Downloaded {len(offers)} outdated offers.")
+
+        if (offers_count := len(offers)) == 0:
+            logging.info("No devices to update.")
+            return
+        else:
+            logging.info(f"Downloaded {offers_count} old devices.")
 
         group(update_offer.s(offer) for offer in offers)()
 
@@ -44,7 +48,8 @@ def update_offer(offer: Offer):
                                             photos=photos,
                                             last_scraped_time=datetime.utcnow(),
                                             category=offer.category,
-                                            is_active=olx_offer.status == OlxOfferStatus.active)
+                                            is_active=olx_offer.status == OlxOfferStatus.active,
+                                            device=offer.device.name if offer.device is not None else None)
     try:
         r = requests.put(f"{API_URL}/v1/offers/{offer.id}", data=offer_update.json())
         r.raise_for_status()

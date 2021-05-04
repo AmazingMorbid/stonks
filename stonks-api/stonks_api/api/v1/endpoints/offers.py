@@ -31,6 +31,8 @@ def get_offers(skip: int = 0,
                limit: int = 50,
                newer_than: Optional[datetime] = None,
                older_than: Optional[datetime] = None,
+               last_stonks_check_before: Optional[datetime] = None,
+               has_device: Optional[bool] = None,
                db: Session = Depends(get_db)):
     if (newer_than is not None and older_than is not None) and newer_than > older_than:
         raise HTTPException(status_code=422, detail={"error": "newer_than cannot be greater than older than, as it "
@@ -39,7 +41,9 @@ def get_offers(skip: int = 0,
                                     skip=skip,
                                     limit=limit,
                                     newer_than=newer_than,
-                                    older_than=older_than)
+                                    older_than=older_than,
+                                    last_stonks_check_before=last_stonks_check_before,
+                                    has_device=has_device)
 
     return offers
 

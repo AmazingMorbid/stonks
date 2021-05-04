@@ -28,8 +28,20 @@ def get_offers(db: Session,
                skip: int,
                limit: int,
                newer_than: Optional[datetime] = None,
-               older_than: Optional[datetime] = None) -> List[models.Offer]:
+               older_than: Optional[datetime] = None,
+               last_stonks_check_before: Optional[datetime] = None,
+               has_device: Optional[bool] = None) -> List[models.Offer]:
     q = db.query(models.Offer)
+
+    if has_device is not None:
+        if has_device:
+            q = q.filter(models.Offer.device_name != None)
+        else:
+            q = q.filter(models.Offer.device_name == None)
+
+    if last_stonks_check_before is not None:
+        q = q.filter((models.Offer.last_stonks_check < last_stonks_check_before) |
+                     (models.Offer.last_stonks_check == None))
 
     if newer_than is not None:
         q = q.filter(models.Offer.last_scraped_time > newer_than)

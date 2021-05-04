@@ -5,6 +5,7 @@ broker_url = 'pyamqp://root:root@127.0.0.1:5672//'
 imports = (
     "prices.tasks",
     "offers.tasks",
+    "stonks.tasks",
 )
 
 # Serialization

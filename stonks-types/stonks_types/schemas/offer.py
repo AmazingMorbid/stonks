@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from typing import Optional, List
 
 from pydantic import BaseModel, Field
@@ -27,12 +28,14 @@ class OfferCreate(OfferBase):
 
 class OfferUpdate(OfferBase):
     device: Optional[str] = None
+    last_stonks_check: Optional[datetime] = None
 
 
 class Offer(OfferBase):
     id: str
     deliveries: List[Delivery] = []
     device: Device = None
+    last_stonks_check: Optional[datetime] = None
 
     class Config:
         orm_mode = True

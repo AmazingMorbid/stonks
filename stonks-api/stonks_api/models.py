@@ -56,6 +56,7 @@ class Offer(Base):
 
     last_refresh_time = Column(DateTime)
     last_scraped_time = Column(DateTime, nullable=False)
+    last_stonks_check = Column(DateTime)
 
 
 class Stonks(Base):
@@ -73,6 +74,7 @@ class Stonks(Base):
     average_price = Column(Numeric(15, 4), nullable=False)
     median_price = Column(Numeric(15, 4), nullable=False)
     harmonic_price = Column(Numeric(15, 4), nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
 
 class Device(Base):

@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Added price updating.">
-      <change afterPath="$PROJECT_DIR$/celeryapp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/celeryconfig.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/offers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/offers/tasks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prices/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prices/tasks.py" afterDir="false" />
+    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Improved project structure.">
+      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/prices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_prices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_prices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stonks/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stonks/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../allegro-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../allegro-sdk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/api/v1/endpoints/offers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_offers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/crud/crud_offers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/stonks_api/tests/api/v1/test_devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/devices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/offer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/offer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/stonks.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-types/stonks_types/schemas/stonks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/celeryconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/celeryconfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/offers/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/offers/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prices/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stonks_watcher/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/stonks_watcher/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tasks.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +140,8 @@
       <workItem from="1619818114796" duration="1336000" />
       <workItem from="1619948033930" duration="5906000" />
       <workItem from="1619967221707" duration="8797000" />
-      <workItem from="1620059245375" duration="22634000" />
+      <workItem from="1620059245375" duration="23119000" />
+      <workItem from="1620122018893" duration="13332000" />
     </task>
     <task id="LOCAL-00001" summary="Added price updating.">
       <created>1620076005239</created>
@@ -137,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620076005239</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Improved project structure.">
+      <created>1620083395407</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620083395407</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +183,7 @@
       <path value="$PROJECT_DIR$/libs/allegro-sdk" />
     </ignored-roots>
     <MESSAGE value="Added price updating." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added price updating." />
+    <MESSAGE value="Improved project structure." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved project structure." />
   </component>
 </project>

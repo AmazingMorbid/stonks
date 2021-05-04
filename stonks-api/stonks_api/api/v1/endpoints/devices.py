@@ -46,22 +46,6 @@ def create_device(device: schemas.DeviceCreate,
     return db_device
 
 
-@router.post("/{device_name}/prices", response_model=List[schemas.Price], status_code=201)
-def create_prices(device_name: str,
-                  prices: List[schemas.PriceCreate],
-                  db: Session = Depends(get_db)):
-    db_device = crud_devices.get_one_by_name(db=db,
-                                             device_name=device_name)
-    device_not_found(db_device)
-    db_prices = crud_devices.create_prices(db=db,
-                                           device_name=device_name,
-                                           prices=prices)
-    db_device.last_price_update = datetime.utcnow()
-    db.commit()
-
-    return db_prices
-
-
 @router.delete("/{device_name}")
 def delete_device(device_name: str,
                   db: Session = Depends(get_db)):

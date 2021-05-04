@@ -9,7 +9,7 @@ from stonks_types.schemas import Device, PricesCreate, PriceCreate
 
 from celeryapp import app
 from config import allegro, config, API_URL
-from stonks_watcher.utils import older_than_datetime_iso
+from stonks_watcher.utils import older_than
 
 
 @app.task
@@ -19,7 +19,7 @@ def periodic_prices_update():
     and for each device, get the latest prices from allegro and update them using `update_device_price`.
     """
     params = {
-        "last_price_update_before": older_than_datetime_iso(timedelta(days=config["prices"]["update_older_than"])),
+        "last_price_update_before": older_than(timedelta(days=config["prices"]["update_older_than"])),
         "limit": config["prices"]["update_count"]
     }
 
@@ -77,13 +77,12 @@ def update_device_prices(prices: List[PriceCreate], device: Device):
     try:
         if len(prices) == 0:
             logging.warning(f"No prices for {device.name} were found on allegro. Creating [] prices to update last_price_update.")
-            r = requests.post(f"{API_URL}/v1/devices/{device.name}/prices", json=[])
+            r = requests.post(f"{API_URL}/v1/prices/{device.name}", json=PricesCreate(prices=[]))
             r.raise_for_status()
             return r.json()
 
-        prices_create = PricesCreate(__root__=prices)
-        r = requests.post(f"{API_URL}/v1/devices/{device.name}/prices",
-                          data=prices_create.json())
+        r = requests.post(f"{API_URL}/v1/prices/{device.name}",
+                          data=PricesCreate(prices=prices).json())
         r.raise_for_status()
 
         return r.json()
