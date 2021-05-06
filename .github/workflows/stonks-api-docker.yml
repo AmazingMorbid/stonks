@@ -52,9 +52,12 @@ jobs:
           
       - name: Run tests
         # run prestart (db migrations) and tests
-        run: docker run $IMAGE_NAME ./scripts/prestart.sh && pipenv run test -svvv
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_stonks
+        run: |
+          docker run \ 
+            -e DATABASE_URL=postgresql://postgres:postgres@localhost:5432/test_stonks \ 
+            $IMAGE_NAME \ 
+            ./scripts/prestart.sh && \ 
+            pipenv run test -svvv
 
       - name: Login to Google Cloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
