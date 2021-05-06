@@ -19,6 +19,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      working-directory: ./stonks-api
     
     services:
       database:
@@ -61,10 +63,12 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --deploy --dev
+        working-directory: ${{env.working-directory}}
           
       - name: Run test suite
         run: |
           alembic upgrade head
           pipenv run test -svvv
+        working-directory: ${{env.working-directory}}
         env:
           DATABASE_URL: postgresql://postgres:postgres@database:5432/test_stonks
