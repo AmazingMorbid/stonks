@@ -8,8 +8,7 @@ COPY ./stonks-types/ ./
 
 WORKDIR /app/stonks-api
 RUN pip install pipenv && \
-    pipenv install --system --ignore-pipfile --dev && \
-    pip uninstall pipenv -y
+    pipenv install --system --ignore-pipfile --dev
 
 COPY ./stonks-api ./
 
@@ -19,4 +18,4 @@ RUN chmod +x ./scripts/prestart.sh ./scripts/start.dev.sh
 
 EXPOSE 8000
 
-ENTRYPOINT ./scripts/start.dev.sh
+CMD ["./scripts/start.sh"]

@@ -1,0 +1,45 @@
+name: Test and push device-recognizer-api Docker image to GCCR.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - device-recognizer-api/**
+      - docker/device-recognizer-api.prod.Dockerfile
+      - .github/device-recognizer-api-docker.yml
+  pull_request:
+    branches: 
+      - master
+    paths:
+      - device-recognizer-api/**
+      - docker/device-recognizer-api.prod.Dockerfile
+      - .github/device-recognizer-api-docker.yml
+
+jobs:
+
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      IMAGE_NAME: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DEVICE_RECOGNIZER_API_APP_NAME }}
+
+    steps:
+      - name: Login to Google Cloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_EMAIL }}
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+      
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        
+      - name: Build image
+        run: docker build . --file ./docker/device-recognizer-api.prod.Dockerfile -t $IMAGE_NAME
+        
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
