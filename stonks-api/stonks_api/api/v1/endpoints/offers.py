@@ -72,9 +72,9 @@ def create_offer(offer: schemas.OfferCreate,
     #     model = device_recognizer.get_info(offer.title).model.lower()
     #     offer.device_model = model if len(model) > 2 else None
 
-    if offer.device is not None:
+    if offer.device_name is not None:
         device = crud_devices.get_one_by_name(db=db,
-                                              device_name=offer.device)
+                                              device_name=offer.device_name)
 
         device_not_found(device)
 

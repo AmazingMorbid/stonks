@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from pydantic import parse_obj_as, BaseModel
 from sqlalchemy.orm import Session
 from stonks_types import schemas
+from stonks_types.schemas import Offer
 
 from stonks_api import models
 from stonks_api.database import SessionLocal
@@ -271,20 +272,24 @@ def test_create_offer_with_device(client: TestClient):
     delete_offers()
     delete_devices()
 
-    data_offer_create.device = "test device"
-    device = schemas.DeviceCreate(name=data_offer_create.device)
+    data_offer_create.device_name = "test device"
+    device = schemas.DeviceCreate(name=data_offer_create.device_name)
 
     client.post(f"/v1/devices/", data=device.json())
     r = client.post(f"/v1/offers/", data=data_offer_create.json())
+    offer_response = Offer(**r.json())
 
     assert r.status_code == 201
-    #                                merge dicts, replacing price for None
-    assert schemas.DeviceCreate(**r.json()["device"] | {"price": None}) == device
+
+    # check device
+    assert offer_response.device.dict(exclude={"last_price_update"}) == device.dict()
+    assert data_offer_create.dict(exclude={"device_name", "deliveries"}).items() <= \
+           offer_response.dict(exclude={"device", "deliveries"}).items()
 
 
 def test_create_offer_with_device_not_found(client: TestClient):
     data_offer_create.id = "ADLNAJKDNJKAD"
-    data_offer_create.device = "THIS DOES NOT EXIST"
+    data_offer_create.device_name = "THIS DOES NOT EXIST"
     r = client.post(f"/v1/offers/", data=data_offer_create.json())
 
     assert r.status_code == 404

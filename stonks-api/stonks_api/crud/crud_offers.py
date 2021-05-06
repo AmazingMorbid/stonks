@@ -62,7 +62,7 @@ def create_offer(db: Session, offer: schemas.OfferCreate) -> models.Offer:
     # Remove deliveries from dictionary, cause it not compatible with sqlalchemy :<
     dict_offer = offer.dict()
     dict_offer.pop("deliveries")
-    dict_offer.pop("device")
+    dict_offer.pop("device_name")
 
     db_offer = models.Offer(**dict_offer)
     db.add(db_offer)
@@ -75,9 +75,9 @@ def create_offer(db: Session, offer: schemas.OfferCreate) -> models.Offer:
                                                   deliveries=offer.deliveries)
 
     # if offer.device is not None:
-    if offer.device is not None:
+    if offer.device_name is not None:
         db_offer.device = crud_devices.get_one_by_name(db=db,
-                                                       device_name=offer.device)
+                                                       device_name=offer.device_name)
 
     db.commit()
 
@@ -87,7 +87,7 @@ def create_offer(db: Session, offer: schemas.OfferCreate) -> models.Offer:
 def update_offer(db: Session, offer_id: str, offer: schemas.OfferUpdate):
     query = db.query(models.Offer).filter(models.Offer.id == offer_id)
 
-    query.update(offer.dict(exclude={"device": ...}) | {"device_name": offer.device})
+    query.update(offer.dict())
     db.commit()
 
     db_offer = query.first()

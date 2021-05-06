@@ -23,11 +23,11 @@ class OfferBase(BaseModel):
 class OfferCreate(OfferBase):
     id: str
     deliveries: Optional[List[DeliveryCreate]] = None
-    device: Optional[str] = None
+    device_name: Optional[str] = None
 
 
 class OfferUpdate(OfferBase):
-    device: Optional[str] = None
+    device_name: Optional[str] = None
     last_stonks_check: Optional[datetime] = None
 
 
