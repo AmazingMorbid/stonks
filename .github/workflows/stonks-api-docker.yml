@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - master
+    paths:
+      - stonks-api/**
+      - stonks-types/**
   pull_request:
     branches: 
       - master
+    paths:
+      - stonks-api/**
+      - stonks-types/**
 
 jobs:
 
