@@ -62,11 +62,13 @@ jobs:
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
+          ls -a
           pipenv install --deploy --dev
         working-directory: ${{env.working-directory}}
           
       - name: Run test suite
         run: |
+          ls -a
           alembic upgrade head
           pipenv run test -svvv
         working-directory: ${{env.working-directory}}
