@@ -63,21 +63,18 @@ jobs:
       - name: Install dependencies
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
-          ls -a
           pipenv install --deploy --dev
         working-directory: ${{env.working-directory}}
           
       - name: Run test suite
         run: |
-          ls -a
           pipenv run migrate
           pipenv run test -svvv
         working-directory: ${{env.working-directory}}
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_stonks
 
-  push-docker-image: 
-    if: ${{ github.ref == 'master' }}
+  push-docker-image:
     needs: test
 
     runs-on: ubuntu-latest
