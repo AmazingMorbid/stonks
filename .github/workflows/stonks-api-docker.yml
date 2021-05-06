@@ -54,7 +54,8 @@ jobs:
         # run prestart (db migrations) and tests
         run: |
           docker run \
-            -e DATABASE_URL=postgresql://postgres:postgres@localhost:5432/test_stonks \
+            -e DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/test_stonks \
+            --network=host \
             $IMAGE_NAME \
             ./scripts/prestart.sh && \
             pipenv run test -svvv
