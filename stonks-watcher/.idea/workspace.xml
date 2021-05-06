@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="" />
+    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Changed things a bit. Commit before deployment.">
+      <change beforePath="$PROJECT_DIR$/../.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../allegro-sdk" beforeDir="false" afterPath="$PROJECT_DIR$/../allegro-sdk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dev.Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-api/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beat.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,8 +24,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1qr4onRFb8dxbGzoDVSKM3HNXq1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -29,11 +41,15 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/offers" />
+    <property name="settings.editor.selected.configurable" value="io.unthrottled.amii.config.ui.PluginSettingsUI" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/offers" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/docs/docs/stonks-watcher" />
       <recent name="$PROJECT_DIR$" />
@@ -97,8 +113,48 @@
       <workItem from="1618834874120" duration="8324000" />
       <workItem from="1618858482170" duration="1241000" />
       <workItem from="1619017248310" duration="7835000" />
-      <workItem from="1619027643628" duration="9517000" />
+      <workItem from="1619027643628" duration="10342000" />
+      <workItem from="1619157835960" duration="720000" />
+      <workItem from="1619195781615" duration="2677000" />
+      <workItem from="1619216436702" duration="11676000" />
+      <workItem from="1619339329624" duration="20614000" />
+      <workItem from="1619808179622" duration="26000" />
+      <workItem from="1619818114796" duration="1336000" />
+      <workItem from="1619948033930" duration="5906000" />
+      <workItem from="1619967221707" duration="8797000" />
+      <workItem from="1620059245375" duration="23119000" />
+      <workItem from="1620122018893" duration="13647000" />
+      <workItem from="1620203701610" duration="1313000" />
     </task>
+    <task id="LOCAL-00001" summary="Added price updating.">
+      <created>1620076005239</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1620076005239</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Improved project structure.">
+      <created>1620083395407</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620083395407</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Changed things a bit. Commit before deployment.">
+      <created>1620146836443</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620146836443</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changed things a bit. Commit before deployment.">
+      <created>1620146844746</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1620146844746</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,5 +179,9 @@
       <path value="$PROJECT_DIR$" />
       <path value="$PROJECT_DIR$/libs/allegro-sdk" />
     </ignored-roots>
+    <MESSAGE value="Added price updating." />
+    <MESSAGE value="Improved project structure." />
+    <MESSAGE value="Changed things a bit. Commit before deployment." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed things a bit. Commit before deployment." />
   </component>
 </project>

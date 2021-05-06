@@ -1,0 +1,11 @@
+api_url: http://localhost:8000
+offers:
+  update_interval: 1
+  update_older_than: 30
+prices:
+  update_interval: 1
+  update_count: 6
+  update_older_than: 7
+stonks:
+  interval: 1
+  older_than: 30

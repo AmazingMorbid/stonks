@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from stonks_types import schemas
 
 from stonks_api import models
-from stonks_api.crud import crud_delivery
+from stonks_api.crud import crud_delivery, crud_devices
 
 LOG_TAG = "crud_offers"
 
@@ -28,8 +28,20 @@ def get_offers(db: Session,
                skip: int,
                limit: int,
                newer_than: Optional[datetime] = None,
-               older_than: Optional[datetime] = None) -> List[models.Offer]:
+               older_than: Optional[datetime] = None,
+               last_stonks_check_before: Optional[datetime] = None,
+               has_device: Optional[bool] = None) -> List[models.Offer]:
     q = db.query(models.Offer)
+
+    if has_device is not None:
+        if has_device:
+            q = q.filter(models.Offer.device_name != None)
+        else:
+            q = q.filter(models.Offer.device_name == None)
+
+    if last_stonks_check_before is not None:
+        q = q.filter((models.Offer.last_stonks_check < last_stonks_check_before) |
+                     (models.Offer.last_stonks_check == None))
 
     if newer_than is not None:
         q = q.filter(models.Offer.last_scraped_time > newer_than)
@@ -50,6 +62,7 @@ def create_offer(db: Session, offer: schemas.OfferCreate) -> models.Offer:
     # Remove deliveries from dictionary, cause it not compatible with sqlalchemy :<
     dict_offer = offer.dict()
     dict_offer.pop("deliveries")
+    dict_offer.pop("device_name")
 
     db_offer = models.Offer(**dict_offer)
     db.add(db_offer)
@@ -60,6 +73,11 @@ def create_offer(db: Session, offer: schemas.OfferCreate) -> models.Offer:
         crud_delivery.create_deliveries_for_offer(db=db,
                                                   offer_id=offer.id,
                                                   deliveries=offer.deliveries)
+
+    # if offer.device is not None:
+    if offer.device_name is not None:
+        db_offer.device = crud_devices.get_one_by_name(db=db,
+                                                       device_name=offer.device_name)
 
     db.commit()
 

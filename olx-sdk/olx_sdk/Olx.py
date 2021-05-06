@@ -1,3 +1,4 @@
+import logging
 from collections import ChainMap
 from pprint import pprint
 from typing import List, Dict
@@ -29,6 +30,8 @@ class Offers(BaseAPI):
     BASE_URL = BaseAPI.BASE_URL + "/offers"
 
     def get_details(self, offer_id: int) -> models.Offer:
+        logging.info(f"Getting details for offer id={offer_id}")
+
         try:
             r = self.get(f"/{offer_id}")
             r.raise_for_status()

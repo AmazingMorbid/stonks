@@ -1,10 +1,10 @@
 from datetime import datetime
-from decimal import Decimal
+from enum import Enum
 from typing import Optional, List
 
 from pydantic import BaseModel, Field
 
-from stonks_types.schemas import DeliveryCreate, Delivery
+from stonks_types.schemas import DeliveryCreate, Delivery, DeviceCreate, Device
 
 
 class OfferBase(BaseModel):
@@ -15,6 +15,7 @@ class OfferBase(BaseModel):
     price: float = Field(..., example=500.59)
     currency: str = Field(..., example="PLN")
     photos: List[str] = Field([])
+    is_active: bool
     last_refresh_time: Optional[datetime] = Field(None, example=datetime.now())
     last_scraped_time: datetime = Field(..., example=datetime.now())
 
@@ -22,15 +23,19 @@ class OfferBase(BaseModel):
 class OfferCreate(OfferBase):
     id: str
     deliveries: Optional[List[DeliveryCreate]] = None
+    device_name: Optional[str] = None
 
 
 class OfferUpdate(OfferBase):
-    pass
+    device_name: Optional[str] = None
+    last_stonks_check: Optional[datetime] = None
 
 
 class Offer(OfferBase):
     id: str
     deliveries: List[Delivery] = []
+    device: Device = None
+    last_stonks_check: Optional[datetime] = None
 
     class Config:
         orm_mode = True

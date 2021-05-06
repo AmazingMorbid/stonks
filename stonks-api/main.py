@@ -3,11 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from stonks_api.api.v1.api import api_router
-from stonks_api.database import engine
-from stonks_api.models import Base
 
-
-Base.metadata.create_all(engine)
 
 app = FastAPI()
 
@@ -26,3 +22,4 @@ async def index():
 
 
 app.include_router(api_router, prefix="/v1")
+

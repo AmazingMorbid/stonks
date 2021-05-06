@@ -5,9 +5,11 @@ from fastapi.testclient import TestClient
 from pydantic import parse_obj_as, BaseModel
 from sqlalchemy.orm import Session
 from stonks_types import schemas
+from stonks_types.schemas import Offer
 
 from stonks_api import models
 from stonks_api.database import SessionLocal
+from stonks_api.tests.utils import delete_offers, delete_devices
 
 data_offer_create = schemas.OfferCreate(id="test_offer",
                                         url="https://example.org",
@@ -20,19 +22,13 @@ data_offer_create = schemas.OfferCreate(id="test_offer",
                                             "https://example.image.org"
                                         ],
                                         last_refresh_time=datetime.now(),
-                                        last_scraped_time=datetime.now())
+                                        last_scraped_time=datetime.now(),
+                                        is_active=True)
 deliveries: List[schemas.DeliveryCreate] = [
     schemas.DeliveryCreate(title="test delivery",
                            price=9.99,
                            currency="PLN")
 ]
-
-
-def delete_offers():
-    db: Session = SessionLocal()
-    db.query(models.Offer).delete()
-    db.commit()
-    db.close()
 
 
 # CREATE OFFER
@@ -126,8 +122,11 @@ def test_delete_offer(client: TestClient):
 
     assert r.status_code == 200
     assert r.json() == {
-        "detail": "Offer had been deleted"
+        "detail": "Offer has been deleted"
     }
+
+    r = client.get(f"/v1/offers")
+    assert len(r.json()) == 0
 
 
 def test_delete_offer_not_found(client: TestClient):
@@ -259,8 +258,41 @@ def test_delete_deliveries(client: TestClient):
     assert r.status_code == 200
     assert r.json() == {"message": f"Deliveries for offer test_offer had been deleted."}
 
+    r = client.get(f"/v1/offers/test_offer/deliveries")
+    assert len(r.json()) == 0
+
 
 def test_delete_deliveries_offer_not_found(client: TestClient):
     r = client.delete(f"/v1/offers/THIS DOES NOT EXIST/deliveries")
 
     assert r.status_code == 404
+
+
+def test_create_offer_with_device(client: TestClient):
+    delete_offers()
+    delete_devices()
+
+    data_offer_create.device_name = "test device"
+    device = schemas.DeviceCreate(name=data_offer_create.device_name)
+
+    client.post(f"/v1/devices/", data=device.json())
+    r = client.post(f"/v1/offers/", data=data_offer_create.json())
+    offer_response = Offer(**r.json())
+
+    assert r.status_code == 201
+
+    # check device
+    assert offer_response.device.dict(exclude={"last_price_update"}) == device.dict()
+    assert data_offer_create.dict(exclude={"device_name", "deliveries"}).items() <= \
+           offer_response.dict(exclude={"device", "deliveries"}).items()
+
+
+def test_create_offer_with_device_not_found(client: TestClient):
+    data_offer_create.id = "ADLNAJKDNJKAD"
+    data_offer_create.device_name = "THIS DOES NOT EXIST"
+    r = client.post(f"/v1/offers/", data=data_offer_create.json())
+
+    assert r.status_code == 404
+    assert r.json() == {
+        "detail": "Device not found."
+    }
