@@ -69,7 +69,7 @@ jobs:
       - name: Run test suite
         run: |
           ls -a
-          alembic upgrade head
+          pipenv run migrate
           pipenv run test -svvv
         working-directory: ${{env.working-directory}}
         env:

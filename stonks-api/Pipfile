@@ -24,4 +24,5 @@ pytest = "*"
 python_version = "3.8"
 
 [scripts]
+migrate = "alembic upgrade head"
 test = "pytest"
