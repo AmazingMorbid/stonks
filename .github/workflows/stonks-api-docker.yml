@@ -38,7 +38,6 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-          
     
     steps:
       - name: Check out repository code
@@ -73,4 +72,4 @@ jobs:
           pipenv run test -svvv
         working-directory: ${{env.working-directory}}
         env:
-          DATABASE_URL: postgresql://postgres:postgres@database:5432/test_stonks
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_stonks
