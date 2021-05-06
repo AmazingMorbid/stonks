@@ -18,7 +18,6 @@ config = context.config
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
 
-load_dotenv()
 config.set_main_option('sqlalchemy.url', os.getenv("DATABASE_URL"))
 
 # add your model's MetaData object here

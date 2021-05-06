@@ -57,8 +57,7 @@ jobs:
             -e DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/test_stonks \
             --network=host \
             $IMAGE_NAME \
-            ./scripts/prestart.sh && \
-            pipenv run test -svvv
+            sh -c "./scripts/prestart.sh && pipenv run test -svvv"
 
       - name: Login to Google Cloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
