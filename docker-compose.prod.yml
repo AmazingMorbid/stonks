@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  stonks-api:
+    build:
+      context: .
+      dockerfile: ./docker/stonks-api.prod.Dockerfile
+    container_name: stonks-api
+    depends_on:
+    - stonks-database
+    environment:
+      - DATABASE_URL=postgresql://lomber:root@stonks-database:5432/stonks
+  
+  device-recognizer-api:
+    build:
+      context: .
+      dockerfile: ./device-recognizer-api/Dockerfile
+    container_name: device-recognizer-api
+
+  stonks-watcher:
+    build:
+      context: .
+      dockerfile: ./stonks-watcher/Dockerfile
+    container_name: stonks-watcher
+    depends_on:
+    - stonks-api
+    - broker
+    
+  
+      
+  stonks-database:
+    image: postgres:13
+    container_name: stonks-database
+    environment:
+    - POSTGRES_USER=root
+    - POSTGRES_PASSWORD=root
+    - POSTGRES_DB=stonks
+    volumes:
+    - stonks_database:/var/lib/postgresql/data
+    
+  broker:
+    image: rabbitmq:3
+    container_name: stonks-broker
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+
+volumes:
+  stonks_database:
