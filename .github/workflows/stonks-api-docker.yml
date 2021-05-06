@@ -58,6 +58,7 @@ jobs:
           
       - name: Run test suite
         run: |
+          alembic upgrade head
           pipenv run test -svvv
         env:
           DATABASE_URL: postgresql://postgres:postgres@database:5432/test_stonks
