@@ -8,7 +8,7 @@ COPY ./stonks-types ./stonks-types
 COPY ./allegro-sdk ./allegro-sdk
 COPY ./olx-sdk ./olx-sdk
 
-RUN ls && ls stonks-watcher && ls allegro-sdk
+RUN ls allegro-sdk -a
 
 WORKDIR /app/stonks-watcher
 RUN pip install pipenv && \
