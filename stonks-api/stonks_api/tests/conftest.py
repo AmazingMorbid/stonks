@@ -1,6 +1,6 @@
 import pytest
-from pytest import Session
 from fastapi.testclient import TestClient
+from pytest import Session
 
 from main import app
 from stonks_api.tests.utils import delete_data

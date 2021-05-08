@@ -1,17 +1,15 @@
-from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from typing import Optional, List
 
+from fastapi import APIRouter, HTTPException
 from fastapi import Depends
 from requests import Session
 from starlette.responses import JSONResponse
-
 from stonks_types import schemas
 
 # from stonks_api.api.v1.endpoints.device_recognizer import device_recognizer
 from stonks_api import crud
 from stonks_api.api.v1.endpoints.devices import device_not_found
-from stonks_api.crud import crud_offers, crud_delivery
 from stonks_api.database import get_db
 
 router = APIRouter()
@@ -101,7 +99,9 @@ def update_offer(offer_id: str,
     #     model = device_recognizer.get_info(offer.title).model.lower()
     #     offer.device_model = model if len(model) > 2 else None
 
-    db_offer = crud_offers.update_offer(db, offer_id, offer)
+    db_offer = crud.offer.update(db=db,
+                                 id=offer_id,
+                                 update_model=offer)
 
     return db_offer
 
@@ -111,7 +111,8 @@ def delete_offer(offer_id: str, db: Session = Depends(get_db)):
     db_offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(db_offer)
 
-    crud_offers.delete_offer(db, offer_id)
+    crud.offer.remove(db=db,
+                      id=offer_id)
 
     return JSONResponse({"detail": "Offer has been deleted"})
 
@@ -124,7 +125,7 @@ def get_deliveries_for_offer(offer_id: str,
     offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
-    deliveries = crud_delivery.get_deliveries_for_offer(db=db,
+    deliveries = crud.delivery.get_deliveries_for_offer(db=db,
                                                         offer_id=offer_id,
                                                         skip=skip,
                                                         limit=limit)
@@ -139,7 +140,7 @@ def add_deliveries_for_offer(offer_id: str,
     offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
-    db_deliveries = crud_delivery.create_deliveries_for_offer(db=db,
+    db_deliveries = crud.delivery.create_deliveries_for_offer(db=db,
                                                               offer_id=offer_id,
                                                               deliveries=deliveries)
 
@@ -152,7 +153,7 @@ def delete_deliveries_for_offer(offer_id: str,
     offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
-    crud_delivery.delete_deliveries_for_offer(db=db,
+    crud.delivery.delete_deliveries_for_offer(db=db,
                                               offer_id=offer_id)
 
     return {"message": f"Deliveries for offer {offer_id} had been deleted."}
@@ -166,12 +167,12 @@ def update_delivery(offer_id: str,
     offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
-    db_delivery = crud_delivery.get_delivery(db=db,
-                                             delivery_id=delivery_id)
+    db_delivery = crud.delivery.get_one(db=db,
+                                        id=delivery_id)
     delivery_not_found(db_delivery)
 
-    db_delivery = crud_delivery.update_delivery(db=db,
-                                                delivery_id=delivery_id,
-                                                delivery=delivery)
+    db_delivery = crud.delivery.update(db=db,
+                                       id=delivery_id,
+                                       update_model=delivery)
 
     return db_delivery

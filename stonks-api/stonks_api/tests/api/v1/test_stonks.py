@@ -1,12 +1,9 @@
 from typing import List
 
-from pydantic import parse_obj_as
-from sqlalchemy.orm import Session
 from fastapi.testclient import TestClient
+from pydantic import parse_obj_as
 from stonks_types import schemas
 
-from stonks_api import models
-from stonks_api.database import SessionLocal
 from stonks_api.tests.utils import delete_stonks
 
 fees: List[schemas.FeeCreate] = [

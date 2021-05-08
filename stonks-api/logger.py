@@ -1,10 +1,7 @@
 """Configure handlers and formats for application loggers."""
 import logging
-import sys
-from pprint import pformat
 
 from loguru import logger
-from loguru._defaults import LOGURU_FORMAT
 
 
 class InterceptHandler(logging.Handler):

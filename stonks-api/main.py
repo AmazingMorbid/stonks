@@ -1,12 +1,12 @@
 import logging
 import os
-import sys
 
 from fastapi import FastAPI
-# from loguru import logger
 
 from logger import InterceptHandler
 from stonks_api.api.v1.api import api_router
+
+# from loguru import logger
 
 DEBUG = True if os.getenv("ENV", "production") == "development" else False
 app = FastAPI(debug=DEBUG)

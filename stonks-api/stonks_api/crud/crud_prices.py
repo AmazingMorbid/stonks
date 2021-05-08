@@ -33,8 +33,8 @@ class CrudPrices(CrudBase[models.Price, schemas.PriceCreate, schemas.PriceCreate
                     db: Session,
                     name: str,
                     prices: List[schemas.PriceCreate]) -> List[models.Price]:
-        db_prices = [self.t_model(**price.dict(),
-                                  device_name=name) for price in prices]
+        db_prices = [self.model(**price.dict(),
+                                device_name=name) for price in prices]
         db.add_all(db_prices)
         db.commit()
         [db.refresh(db_price) for db_price in db_prices]

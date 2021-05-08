@@ -2,12 +2,11 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-
 from stonks_types import schemas
 
 from stonks_api import crud
 from stonks_api.api.v1.endpoints.offers import offer_not_found
-from stonks_api.crud import crud_stonks, crud_offers
+from stonks_api.crud import crud_stonks
 from stonks_api.database import get_db
 
 router = APIRouter()

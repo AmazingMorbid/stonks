@@ -3,12 +3,9 @@ from typing import List
 
 from fastapi.testclient import TestClient
 from pydantic import parse_obj_as, BaseModel
-from sqlalchemy.orm import Session
 from stonks_types import schemas
 from stonks_types.schemas import Offer
 
-from stonks_api import models
-from stonks_api.database import SessionLocal
 from stonks_api.tests.utils import delete_offers, delete_devices
 
 data_offer_create = schemas.OfferCreate(id="test_offer",

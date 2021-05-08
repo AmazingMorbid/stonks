@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
