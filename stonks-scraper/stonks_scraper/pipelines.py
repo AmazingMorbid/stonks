@@ -28,11 +28,13 @@ class OlxOffersPipeline:
             return item
 
         try:
+            logging.debug(f"Creating new offer id={offer.id}...")
             r = requests.post(f"{STONKS_API}/v1/offers",
                               data=offer.json(),
                               headers={'Content-type': 'application/json'})
 
             if r.status_code == 409:
+                logging.debug(f"Offer id={offer.id} already exists, updating ...")
                 r = requests.put(f"{STONKS_API}/v1/offers/{offer.id}",
                                  data=offer.json(),
                                  headers={'Content-type': 'application/json'})
@@ -40,10 +42,15 @@ class OlxOffersPipeline:
 
             logging.info(f"[{self.LOG_TAG}]: POSTed offer, response: code: {r.status_code}, body: {r.json()}")
 
-        except requests.exceptions.ConnectionError:
-            raise CloseSpider(reason=f"{self.LOG_TAG}: Could not connect to API. Exiting...")
+        except requests.exceptions.ConnectionError as e:
+            sentry_sdk.capture_exception(e)
+            logging.exception(f"{self.LOG_TAG}: Could not connect to API. Exiting...\n{e}")
 
-        except requests.HTTPError:
-            raise CloseSpider(reason=f"{self.LOG_TAG}: Creating an offer failed. Exiting...")
+        except requests.HTTPError as e:
+            msg = f"{self.LOG_TAG}: Creating an offer failed. Exiting...\n" \
+                  f"Exception: {e}\n" \
+                  f"Response: {e.response.json()}"
+            sentry_sdk.capture_exception(e)
+            logging.exception(msg)
 
         return item

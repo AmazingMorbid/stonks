@@ -13,9 +13,9 @@ from stonks_api.database import get_db
 router = APIRouter()
 
 
-def device_not_found(device):
+def device_not_found(device: schemas.DeviceBase):
     if device is None:
-        raise HTTPException(status_code=404, detail="Device not found.")
+        raise HTTPException(status_code=404, detail=f"Device not found.")
 
 
 @router.get("/", response_model=List[schemas.Device])
@@ -35,7 +35,7 @@ def get_devices(limit: int = 500,
 def create_device(device: schemas.DeviceCreate,
                   db: Session = Depends(get_db)):
     db_device = crud.device.get_one_by_name(db=db,
-                                            name=device.name)
+                                            name=device.name.lower())
     if db_device is not None:
         raise HTTPException(status_code=409,
                             detail="Device already exists.")

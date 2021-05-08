@@ -27,6 +27,14 @@ class CrudDevice(CrudBase[models.Device, schemas.DeviceCreate, schemas.DeviceUpd
 
         return devices
 
+    def create(self,
+               db: Session,
+               new_model: schemas.DeviceCreate) -> models.Device:
+        # Ensure that model **name** is always saved in lowercase.
+        new_model.name = new_model.name.lower()
+        return super().create(db=db,
+                              new_model=new_model)
+
     def remove_by_name(self,
                        db: Session,
                        name: str):

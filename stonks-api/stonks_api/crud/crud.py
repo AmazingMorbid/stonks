@@ -44,6 +44,7 @@ class CrudBase(Generic[TModel, CreateType, UpdateType]):
                db: Session,
                id: Union[int, str],
                update_model: Union[Type[UpdateType], dict]) -> TModel:
+        logger.debug(f"Updating model id={id} with {update_model}")
         query = db.query(self.model).filter(self.model.id == id)
 
         if type(update_model) == dict:
@@ -61,5 +62,6 @@ class CrudBase(Generic[TModel, CreateType, UpdateType]):
     def remove(self,
                db: Session,
                id: int):
+        logger.debug(f"Removing model id={id}")
         db.query(self.model).filter_by(id=id).delete()
         db.commit()

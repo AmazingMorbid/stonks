@@ -3,22 +3,24 @@ from typing import List
 from fastapi.testclient import TestClient
 from pydantic import parse_obj_as
 from stonks_types import schemas
+from stonks_types.schemas import Device
 
 from stonks_api.tests.utils import delete_devices
 
-device = schemas.DeviceCreate(name="test device")
+device = schemas.DeviceCreate(name="Test device")
+device_name_lowercase = device.name.lower()
 
 
 def test_create_device(client: TestClient):
     delete_devices()
     r = client.post("v1/devices/",
                     data=device.json())
+    device_response = Device(**r.json())
 
-    print(r.json())
     assert r.status_code == 201
-    print(device)
-    print(schemas.DeviceCreate(**r.json()))
-    assert schemas.DeviceCreate(**r.json()) == device
+    # Ensure that device name is always saved in lowercase
+    assert device_response.name == device_name_lowercase
+    assert device.dict(exclude={"name"}).items() <= device_response.dict(exclude={"name"}).items()
 
 
 def test_create_device_already_exists(client: TestClient):
@@ -41,12 +43,14 @@ def test_get_devices(client: TestClient):
     assert r.status_code == 200
 
     devices: List[schemas.Device] = parse_obj_as(List[schemas.Device], r.json())
-    print(r.json())
-    assert schemas.DeviceCreate(**devices[0].dict()) == device
+    device_response = devices[0]
+    assert len(devices) == 1
+    assert device_response.name == device_name_lowercase
+    assert device.dict(exclude={"name"}).items() <= device_response.dict(exclude={"name"}).items()
 
 
 def test_delete_device(client: TestClient):
-    r = client.delete(f"v1/devices/{device.name}")
+    r = client.delete(f"v1/devices/{device_name_lowercase}")
 
     assert r.status_code == 200
     assert r.json() == {

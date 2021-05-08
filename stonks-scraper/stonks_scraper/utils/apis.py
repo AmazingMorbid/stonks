@@ -31,8 +31,9 @@ def get_device_model(text: str) -> Optional[str]:
 
 def get_device_info(text: str) -> Optional[dict]:
     try:
+        logging.debug(f"Getting device info for text={text}")
+
         r = requests.get(f"{DEVICE_RECOGNIZER_API}/api/v1/get-info", params={"text": text})
-        print("get_device_info status:", r.status_code)
         r.raise_for_status()
 
     except requests.exceptions.HTTPError as errh:
@@ -52,14 +53,14 @@ def get_device_info(text: str) -> Optional[dict]:
         logging.exception("OOps: Something Else")
 
     else:
+        logging.debug("Getting device info success")
         return r.json()
 
 
 def create_device(device: DeviceCreate) -> Optional[str]:
     try:
-        print(device)
+        logging.debug(f"Creating device {device}")
         r = requests.post(f"{STONKS_API}/v1/devices", data=device.json())
-        print("create_device status:", r.status_code)
         if r.status_code != 409:
             r.raise_for_status()
 
@@ -80,4 +81,6 @@ def create_device(device: DeviceCreate) -> Optional[str]:
         logging.exception("OOps: Something Else")
 
     else:
+        logging.debug(f"Creating device success")
+
         return device.name.lower()
