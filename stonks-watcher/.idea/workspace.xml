@@ -2,31 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Changed things a bit. Commit before deployment.">
-      <change afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/start-beat.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/start-worker.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stonks_watcher/apis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../device-recognizer-api/scripts/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer-api/scripts/start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker/device-recognizer-api.prod.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/device-recognizer-api.prod.Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker/stonks-api.prod.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/stonks-api.prod.Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../stonks-api/scripts/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-api/scripts/start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker/stonks-watcher.prod.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/stonks-watcher.prod.Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celeryapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/celeryapp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celeryconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/celeryconfig.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev.Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/flowerconfig.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/offers/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/offers/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/olx_offer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/stonks/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_watcher/category_mapper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stonks_watcher/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/stonks_watcher/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/celeryconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/celeryconfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/start-worker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start-worker.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stonks-scraper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -146,6 +126,7 @@
       <workItem from="1620122018893" duration="13647000" />
       <workItem from="1620203701610" duration="1313000" />
       <workItem from="1620337667142" duration="14495000" />
+      <workItem from="1620512494061" duration="354000" />
     </task>
     <task id="LOCAL-00001" summary="Added price updating.">
       <created>1620076005239</created>

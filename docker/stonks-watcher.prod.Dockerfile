@@ -14,4 +14,7 @@ RUN pip install pipenv && \
 
 COPY ./stonks-watcher ./
 
+# Thanks to that, celery worker won't scream about root, duh
+RUN useradd --shell /bin/bash celery
+
 RUN chmod +x ./scripts/start-worker.sh ./scripts/start-beat.sh
