@@ -1,4 +1,4 @@
-PATH=/usr/local/bin
+PATH=/usr/local/bin:$PATH
 
-*/2 * * * * root cd /app && scrapy crawl olx_spider >> /var/log/cron.log 2>&1
+*/1 * * * * root cd /app/stonks-scraper && pipenv run start >> /var/log/stonks-scraper-cron.log 2>&1
 # Don't remove the empty line at the end of this file. It is required to run the cron job

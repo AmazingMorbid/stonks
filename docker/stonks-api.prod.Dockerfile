@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 WORKDIR /app/stonks-api
 COPY ./stonks-api/Pipfile ./stonks-api/Pipfile.lock ./
@@ -16,6 +16,6 @@ ENV ENV=production
 
 RUN chmod +x ./scripts/prestart.sh ./scripts/start.sh
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["./scripts/start.sh"]

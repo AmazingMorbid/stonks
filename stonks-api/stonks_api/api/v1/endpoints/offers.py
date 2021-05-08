@@ -9,8 +9,9 @@ from starlette.responses import JSONResponse
 from stonks_types import schemas
 
 # from stonks_api.api.v1.endpoints.device_recognizer import device_recognizer
+from stonks_api import crud
 from stonks_api.api.v1.endpoints.devices import device_not_found
-from stonks_api.crud import crud_offers, crud_delivery, crud_devices
+from stonks_api.crud import crud_offers, crud_delivery
 from stonks_api.database import get_db
 
 router = APIRouter()
@@ -37,20 +38,20 @@ def get_offers(skip: int = 0,
     if (newer_than is not None and older_than is not None) and newer_than > older_than:
         raise HTTPException(status_code=422, detail={"error": "newer_than cannot be greater than older than, as it "
                                                               "will always return no offers."})
-    offers = crud_offers.get_offers(db,
-                                    skip=skip,
-                                    limit=limit,
-                                    newer_than=newer_than,
-                                    older_than=older_than,
-                                    last_stonks_check_before=last_stonks_check_before,
-                                    has_device=has_device)
+    offers = crud.offer.get_many(db=db,
+                                 skip=skip,
+                                 limit=limit,
+                                 newer_than=newer_than,
+                                 older_than=older_than,
+                                 last_stonks_check_before=last_stonks_check_before,
+                                 has_device=has_device)
 
     return offers
 
 
 @router.get("/{offer_id}", response_model=schemas.Offer)
 def get_offer(offer_id: str, db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db, offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
 
     offer_not_found(offer)
 
@@ -61,11 +62,10 @@ def get_offer(offer_id: str, db: Session = Depends(get_db)):
 def create_offer(offer: schemas.OfferCreate,
                  get_device_model: bool = False,
                  db: Session = Depends(get_db)):
-    db_offer = crud_offers.get_offer(db, offer.id)
+    db_offer = crud.offer.get_one(db=db, id=offer.id)
 
     if db_offer is not None:
         raise HTTPException(status_code=409, detail="Offer already exists. Consider using upsert route.")
-
 
     # if get_device_model is True get device model and set it
     # if get_device_model:
@@ -73,12 +73,12 @@ def create_offer(offer: schemas.OfferCreate,
     #     offer.device_model = model if len(model) > 2 else None
 
     if offer.device_name is not None:
-        device = crud_devices.get_one_by_name(db=db,
-                                              device_name=offer.device_name)
+        device = crud.device.get_one_by_name(db=db,
+                                             name=offer.device_name)
 
         device_not_found(device)
 
-    db_offer = crud_offers.create_offer(db, offer)
+    db_offer = crud.offer.create(db=db, new_model=offer)
 
     return db_offer
 
@@ -92,7 +92,7 @@ def update_offer(offer_id: str,
     Update offer information.
     Note that you cannot update delivery information from here, instead you must call /offers/id/deliveries/id
     """
-    db_offer = crud_offers.get_offer(db, offer_id)
+    db_offer = crud.offer.get_one(db=db, id=offer_id)
 
     offer_not_found(db_offer)
 
@@ -108,7 +108,7 @@ def update_offer(offer_id: str,
 
 @router.delete("/{offer_id}")
 def delete_offer(offer_id: str, db: Session = Depends(get_db)):
-    db_offer = crud_offers.get_offer(db, offer_id)
+    db_offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(db_offer)
 
     crud_offers.delete_offer(db, offer_id)
@@ -121,7 +121,7 @@ def get_deliveries_for_offer(offer_id: str,
                              skip: int = 0,
                              limit: int = 50,
                              db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db=db, offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
     deliveries = crud_delivery.get_deliveries_for_offer(db=db,
@@ -136,7 +136,7 @@ def get_deliveries_for_offer(offer_id: str,
 def add_deliveries_for_offer(offer_id: str,
                              deliveries: List[schemas.DeliveryCreate],
                              db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db=db, offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
     db_deliveries = crud_delivery.create_deliveries_for_offer(db=db,
@@ -149,7 +149,7 @@ def add_deliveries_for_offer(offer_id: str,
 @router.delete("/{offer_id}/deliveries")
 def delete_deliveries_for_offer(offer_id: str,
                                 db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db=db, offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
     crud_delivery.delete_deliveries_for_offer(db=db,
@@ -163,8 +163,7 @@ def update_delivery(offer_id: str,
                     delivery_id: int,
                     delivery: schemas.DeliveryUpdate,
                     db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db=db,
-                                  offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
     db_delivery = crud_delivery.get_delivery(db=db,

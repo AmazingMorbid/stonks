@@ -1,12 +1,13 @@
-import sentry_sdk
+import os
 
-from sentry_sdk.integrations.celery import CeleryIntegration
+import sentry_sdk
 from celery import Celery
+from sentry_sdk.integrations.celery import CeleryIntegration
 
 from config import config
 
 app = Celery("stonks_watcher")
-app.config_from_object("celeryconfig")
+app.config_from_object("config.celeryconfig")
 app.conf.beat_schedule = {
     "Periodic-prices-update": {
         "task": "prices.tasks.periodic_prices_update",
@@ -20,8 +21,12 @@ app.conf.beat_schedule = {
     },
 }
 
-sentry_sdk.init(
-    dsn='https://f1e132df10f04ba398e0750959149471@o577912.ingest.sentry.io/5733971',
-    integrations=[CeleryIntegration()],
-    sample_rate=0.2,
-)
+SENTRY_DSN = os.getenv("SENTRY_DSN", None)
+
+if SENTRY_DSN is not None:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[CeleryIntegration()],
+        sample_rate=0.2,
+        environment=os.getenv("ENV", "development")
+    )

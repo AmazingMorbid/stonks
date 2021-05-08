@@ -1,7 +1,0 @@
-
-categories = {
-    "smartphones": {
-        "olx": ,
-        "allegro": ,
-    }
-}

@@ -1,4 +1,4 @@
-api_url: http://localhost:8000
+api_url: http://stonks-api
 offers:
   update_interval: 1
   update_older_than: 30

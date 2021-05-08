@@ -8,7 +8,8 @@ from pydantic import parse_obj_as
 from stonks_types.schemas import Device, PricesCreate, PriceCreate
 
 from celeryapp import app
-from config import allegro, config, API_URL
+from config.config import config, API_URL
+from stonks_watcher.apis import allegro
 from stonks_watcher.utils import older_than
 
 

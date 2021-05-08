@@ -10,7 +10,8 @@ from pydantic import parse_obj_as
 from stonks_types.schemas import Offer, OfferUpdate
 
 from celeryapp import app
-from config import olx, config, API_URL
+from config import config, API_URL
+from stonks_watcher.apis import olx
 from stonks_watcher.utils import older_than
 
 
@@ -27,10 +28,10 @@ def periodic_offers_update():
         offers: List[Offer] = parse_obj_as(List[Offer], r.json())
 
         if (offers_count := len(offers)) == 0:
-            logging.info("No devices to update.")
+            logging.info("No offers to update.")
             return
         else:
-            logging.info(f"Downloaded {offers_count} old devices.")
+            logging.info(f"Downloaded {offers_count} old offers.")
 
         group(update_offer.s(offer) for offer in offers)()
 
@@ -49,7 +50,7 @@ def update_offer(offer: Offer):
                                             last_scraped_time=datetime.utcnow(),
                                             category=offer.category,
                                             is_active=olx_offer.status == OlxOfferStatus.active,
-                                            device=offer.device.name if offer.device is not None else None)
+                                            device_name=offer.device.name if offer.device is not None else None)
     try:
         r = requests.put(f"{API_URL}/v1/offers/{offer.id}", data=offer_update.json())
         r.raise_for_status()

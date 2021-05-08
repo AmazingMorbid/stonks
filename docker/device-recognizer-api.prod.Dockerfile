@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 WORKDIR /app/device-recognizer-api
 COPY ./device-recognizer-api/Pipfile ./device-recognizer-api/Pipfile.lock ./
@@ -12,6 +12,6 @@ ENV ENV=production
 
 RUN chmod +x ./scripts/start.sh
 
-EXPOSE 8010
+EXPOSE 80
 
 CMD ["./scripts/start.sh"]

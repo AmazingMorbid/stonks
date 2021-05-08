@@ -1,5 +1,4 @@
 import logging
-from collections import Counter
 from datetime import timedelta
 from pprint import pprint
 from typing import List
@@ -9,7 +8,7 @@ from pydantic import parse_obj_as
 from stonks_types.schemas import Offer
 
 from celeryapp import app
-from config import API_URL, config
+from config.config import API_URL, config
 from stonks_watcher.utils import older_than
 
 

@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from stonks_types import schemas
 
+from stonks_api import crud
 from stonks_api.api.v1.endpoints.offers import offer_not_found
 from stonks_api.crud import crud_stonks, crud_offers
 from stonks_api.database import get_db
@@ -42,7 +43,7 @@ def get_stonks(stonks_id: int,
 def create_stonks(offer_id: str,
                   stonks: schemas.StonksCreate,
                   db: Session = Depends(get_db)):
-    offer = crud_offers.get_offer(db=db, offer_id=offer_id)
+    offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
     db_stonks = crud_stonks.create(db=db,

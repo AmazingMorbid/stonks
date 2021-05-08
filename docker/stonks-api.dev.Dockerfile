@@ -18,4 +18,4 @@ RUN chmod +x ./scripts/prestart.sh ./scripts/start.dev.sh
 
 EXPOSE 8000
 
-CMD ["./scripts/start.sh"]
+CMD ["./scripts/start.dev.sh"]
