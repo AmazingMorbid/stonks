@@ -12,6 +12,6 @@ ENV ENV=production
 
 RUN chmod +x ./scripts/start.sh
 
-EXPOSE 80
+EXPOSE 8010
 
 CMD ["./scripts/start.sh"]
