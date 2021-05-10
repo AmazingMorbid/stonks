@@ -21,11 +21,11 @@ class OlxOffersPipeline:
         offer = OfferCreate(**dict(item))
 
         # TODO: move device model extraction to the stonks-watcher and save offers even without it
-        offer.device_name = get_device_model(offer.title)
-
-        if offer.device_name is None:
-            logging.error("Device name is None. Currently, stonks watcher is useless without it, so offer won't be saved.")
-            return item
+        # offer.device_name = get_device_model(offer.title)
+        #
+        # if offer.device_name is None:
+        #     logging.error("Device name is None. Currently, stonks watcher is useless without it, so offer won't be saved.")
+        #     return item
 
         try:
             logging.debug(f"Creating new offer id={offer.id}...")

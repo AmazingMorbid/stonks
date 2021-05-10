@@ -2,11 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Changed things a bit. Commit before deployment.">
-      <change beforePath="$PROJECT_DIR$/../docker/stonks-watcher.prod.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/stonks-watcher.prod.Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../device-recognizer/Notebook.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../device-recognizer/datasets/doccano_output.jsonl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/dataset1.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/dataset1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/dataset1.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/dataset1.jsonl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/dataset_clicked_2.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/dataset_clicked_2.jsonl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/offers.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/offers.jsonl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/offers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/offers.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/offers_dataset2.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/offers_dataset2.jsonl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../device-recognizer/datasets/train.json" beforeDir="false" afterPath="$PROJECT_DIR$/../device-recognizer/datasets/old/train.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker/stonks-scraper.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/stonks-scraper.Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/crontab" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/crontab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/github actions trigger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../stonks-scraper/stonks_scraper/pipelines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/celeryconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/celeryconfig.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/start-worker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start-worker.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +139,8 @@
       <workItem from="1620203701610" duration="1313000" />
       <workItem from="1620337667142" duration="14495000" />
       <workItem from="1620512494061" duration="354000" />
+      <workItem from="1620659308753" duration="816000" />
+      <workItem from="1620660932253" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="Added price updating.">
       <created>1620076005239</created>
