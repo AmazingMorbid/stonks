@@ -1,8 +1,10 @@
+import logging
 from datetime import datetime
 from typing import List
 
 import pytz as pytz
 import scrapy
+import sentry_sdk
 from olx_sdk import OLX
 from olx_sdk.models import Offer as OlxOffer
 from olx_sdk.models import Status as OlxOfferStatus
@@ -22,8 +24,6 @@ query_params = "?search%5Border%5D=created_at%3Adesc"
 
 
 class OlxSpider(scrapy.Spider):
-    LOG_TAG = "OlxSpider"
-
     name = "olx_spider"
     allowed_domains = ["olx.pl"]
 
@@ -41,74 +41,49 @@ class OlxSpider(scrapy.Spider):
         self.olx = OLX()
 
     def parse(self, response: HtmlResponse, **kwargs):
-        for offer in response.css("td.offer")[:-1]:
-            # offer_item = OlxOfferItem()
+        offers = response.css("td.offer")[:-1]
 
-            # offer_item["title"] = offer.xpath('div/table/tbody/tr[1]/td[2]/div/h3/a/strong/text()').get()
-            # offer_item["price"] = convert_price(offer.css("p.price>strong::text").get(), website="olx")
-            # offer_item["currency"] = "PLN"
-            # offer_item["url"] = offer.xpath('div/table/tbody/tr[1]/td[2]/div/h3/a/@href').get()
-            # offer_item["scraped_date"] = datetime.now()
+        if len(offers) == 0:
+            self.logger.critical("No offers in listing had been scraped.")
+            return
 
-            # request = scrapy.Request(
-            #     offer_item["url"],
-            #     callback=self.parse_details,
-            #     cb_kwargs={"item": offer_item}
-            # )
+        self.logger.info(f"Got {len(offers)} offers in listing.")
 
-            url = offer.xpath('div/table/tbody/tr[1]/td[2]/div/h3/a/@href').get()
+        for offer in offers:
+            offer_id = offer.css("table::attr(data-id)").get()
 
-            if url is None:
-                raise CloseSpider(reason=f"{self.LOG_TAG}: Offer url is None.")
+            self.logger.info(f"Parsing offer <id={offer_id}>")
 
-            request = scrapy.Request(
-                url,
-                callback=self.parse_details,
-            )
+            if offer_id is None:
+                self.logger.critical("Offer id is None.")
+                return
 
-            yield request
+            try:
+                offer_details: OlxOffer = self.olx.offers.get_details(offer_id)
 
-    def parse_details(self, response: HtmlResponse, offer_id=None):
-        # item["offer_id"] = response.xpath('//ul[@class="offer-bottombar__items"]/li[3]//strong/text()').get()
-        # item["description"] = "\n".join(response.css("div#textContent::text").getall()).strip()
-        # added_datetime = response.xpath('//ul[@class="offer-bottombar__items"]/li[1]//strong/text()').get()[1:]
-        # item["added_date"] = dateparser.parse(added_datetime, languages=["pl"])
-        #
-        # r = requests.get(f"https://www.olx.pl/api/v1/offers/{item['offer_id']}")
-        # print(r.json())
-        #
-        # yield item
+            except Exception:
+                self.logger.error("Could not retrieve data from OLX API.")
+                return
 
-        if offer_id is None:
-            offer_id = response.xpath('//ul[@class="offer-bottombar__items"]/li[3]//strong/text()').get()
+            else:
+                offer_dict = offer_details.dict()
+                offer_item: OlxOfferItem = OlxOfferItem()
 
-        if offer_id is None:
-            raise CloseSpider(reason=f"{self.LOG_TAG}: Offer id is None.")
+                for key in offer_dict.keys() & offer_item.fields.keys() - ["id", "deliveries", "photos"]:
+                    offer_item[key] = offer_dict[key]
 
-        try:
-            offer: OlxOffer = self.olx.offers.get_details(offer_id)
-        except Exception as e:
-            raise CloseSpider(reason=repr(e))
+                offer_item["id"] = f"olx-{offer_details.id}"
+                offer_item["category"] = "smartphones"
+                offer_item["is_active"] = offer_details.status == OlxOfferStatus.active
 
-        else:
-            offer_dict = offer.dict()
-            offer_item: OlxOfferItem = OlxOfferItem()
+                if offer_details.delivery.active:
+                    offer_item["deliveries"] = [
+                        stonks_schemas.DeliveryCreate(title="Dostawa OLX",
+                                                      price=10,
+                                                      currency="PLN")
+                    ]
 
-            for key in offer_dict.keys() & offer_item.fields.keys() - ["id", "deliveries", "photos"]:
-                offer_item[key] = offer_dict[key]
+                offer_item["photos"] = [photo.link for photo in offer_details.photos]
+                offer_item["last_scraped_time"] = datetime.utcnow()
 
-            offer_item["id"] = f"olx-{offer.id}"
-            offer_item["category"] = "smartphones"
-            offer_item["is_active"] = offer.status == OlxOfferStatus.active
-
-            if offer.delivery.active:
-                offer_item["deliveries"] = [
-                    stonks_schemas.DeliveryCreate(title="Dostawa OLX",
-                                                  price=10,
-                                                  currency="PLN")
-                ]
-
-            offer_item["photos"] = [photo.link for photo in offer.photos]
-            offer_item["last_scraped_time"] = datetime.utcnow()
-
-            return offer_item
+                yield offer_item

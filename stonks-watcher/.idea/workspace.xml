@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Changed things a bit. Commit before deployment." />
+    <list default="true" id="6555193f-f610-4733-ba2a-9d614124eb69" name="Default Changelist" comment="Changed things a bit. Commit before deployment.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,6 +125,7 @@
       <workItem from="1620512494061" duration="354000" />
       <workItem from="1620659308753" duration="816000" />
       <workItem from="1620660932253" duration="599000" />
+      <workItem from="1620735976671" duration="1012000" />
     </task>
     <task id="LOCAL-00001" summary="Added price updating.">
       <created>1620076005239</created>

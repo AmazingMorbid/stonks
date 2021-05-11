@@ -11,7 +11,7 @@ from olx_sdk.exceptions import OfferNotFound
 
 
 class BaseAPI:
-    BASE_URL = "https://olx.pl/api/v1"
+    BASE_URL = "https://www.olx.pl/api/v1"
     session: requests.Session = None
 
     def __init__(self, session: requests.Session):

@@ -9,7 +9,7 @@ allegro-sdk = {editable = true, path = "./../allegro-sdk"}
 olx-sdk = {editable = true, path = "./../olx-sdk"}
 pydantic = "*"
 stonks-types = {editable = true, path = "./../stonks-types"}
-sentry-sdk = "==0.10.2"
+sentry-sdk = "==1.1.0"
 pytz = "*"
 celery = "*"
 
