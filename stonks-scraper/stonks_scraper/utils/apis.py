@@ -11,6 +11,12 @@ DEVICE_RECOGNIZER_API = os.getenv("DEVICE_RECOGNIZER_API_URL", "http://device-re
 STONKS_API = os.getenv("STONKS_API_URL", "http://stonks-api")
 
 
+def is_offer_already_scraped(offer_id: int) -> bool:
+    r = requests.get(f"{STONKS_API}/v1/offers/olx-{offer_id}")
+
+    return r.status_code == 200 or r.status_code == 409
+
+
 def get_device_model(text: str) -> Optional[str]:
     # Get device info from device recognizer
     device_info = get_device_info(text)

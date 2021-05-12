@@ -1,7 +1,6 @@
 import logging
 
 import requests
-import sentry_sdk
 from scrapy import Spider
 
 from stonks_scraper.items import OlxOfferItem
@@ -32,11 +31,11 @@ class OlxOffersPipeline:
                               data=offer.json(),
                               headers={'Content-type': 'application/json'})
 
-            if r.status_code == 409:
-                self.logger.debug(f"Offer id={offer.id} already exists, updating ...")
-                r = requests.put(f"{STONKS_API}/v1/offers/{offer.id}",
-                                 data=offer.json(),
-                                 headers={'Content-type': 'application/json'})
+            # if r.status_code == 409:
+            #     self.logger.debug(f"Offer id={offer.id} already exists, updating ...")
+            #     r = requests.put(f"{STONKS_API}/v1/offers/{offer.id}",
+            #                      data=offer.json(),
+            #                      headers={'Content-type': 'application/json'})
             r.raise_for_status()
 
         except requests.HTTPError as e:

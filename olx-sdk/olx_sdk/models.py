@@ -124,7 +124,7 @@ class Offer(BaseModel):
     # location: Location
     photos: List[Photo]
     # partner: Any
-    # category: Category
+    category: Category
     delivery: Delivery
     # safedeal: Safedeal
     # shop: Dict[str, str]

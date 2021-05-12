@@ -3,6 +3,6 @@
 echo "Applying environment"
 printenv >> /etc/environment
 
-#echo "Starting cron"
-#cron -f
-pipenv run start
+echo "Starting cron"
+cron -f
+#pipenv run start
