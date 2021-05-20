@@ -1,0 +1,5 @@
+PATH=/usr/local/bin:$PATH
+
+# */5 * * * * root cd /app/backend/stonks-scraper && scrapy crawl olx_spider > /proc/1/fd/1 2>/proc/1/fd/2
+# * * * * * root cd /app/backend/stonks-scraper && scrapy crawl olx_spider > /proc/1/fd/1 2>/proc/1/fd/2
+# Don't remove the empty line at the end of this file. It is required to run the cron job

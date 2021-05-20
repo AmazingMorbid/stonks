@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+stonks-types = {editable = true, path = "./libs/stonks-types"}
+olx-sdk = {editable = true, path = "./libs/olx-sdk"}
+allegro-sdk = {editable = true, path = "./libs/allegro-sdk"}
+requests = "*"
+scrapy = "*"
+python-dotenv = "*"
+pydantic = "*"
+sentry-sdk = "==1.1.0"
+celery = "*"
+fastapi = {extras = ["all"], version = "~=0.63.0"}
+uvicorn = {extras = ["standard"], version = "*"}
+sqlalchemy = "*"
+alembic = "*"
+psycopg2-binary = "~=2.8.6"
+loguru = "==0.5.3"
+
+[dev-packages]
+pytest = "*"
+watchdog = "*"
+argh = "*"
+
+[requires]
+python_version = "3.8"

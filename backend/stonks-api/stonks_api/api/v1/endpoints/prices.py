@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+from urllib import parse
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -12,7 +13,7 @@ from stonks_api.database import get_db
 router = APIRouter()
 
 
-@router.get("/{device_name}", response_model=schemas.Prices)
+@router.get("/{device_name:path}", response_model=schemas.Prices)
 def get_prices_for_device(device_name: str,
                           newer_than: Optional[datetime] = None,
                           older_than: Optional[datetime] = None,
@@ -28,7 +29,7 @@ def get_prices_for_device(device_name: str,
     return schemas.Prices(prices=db_prices)
 
 
-@router.post("/{device_name}", response_model=schemas.Prices, status_code=201)
+@router.post("/{device_name:path}", response_model=schemas.Prices, status_code=201)
 def create_prices(device_name: str,
                   prices: schemas.PricesCreate,
                   db: Session = Depends(get_db)):
