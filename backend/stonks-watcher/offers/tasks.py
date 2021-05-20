@@ -76,29 +76,29 @@ def periodic_get_device_info():
     params = {
         "is_active": True,
         "has_device": False,
+        "limit": 500,
     }
 
-    while True:
-        try:
-            r = requests.get(f"{API_URL}/v1/offers", params=params)
-            r.raise_for_status()
+    try:
+        r = requests.get(f"{API_URL}/v1/offers", params=params)
+        r.raise_for_status()
 
-            offers: List[Offer] = parse_obj_as(List[Offer], r.json())
-            offers_count = len(offers)
+        offers: List[Offer] = parse_obj_as(List[Offer], r.json())
+        offers_count = len(offers)
 
-            if offers_count == 0:
-                logging.info("No offers without device.")
-                break
-            else:
-                logger.info(f"Downloaded {offers_count} offers without device.")
+        if offers_count == 0:
+            logging.info("No offers without device.")
+            return
+        else:
+            logger.info(f"Downloaded {offers_count} offers without device.")
 
-            texts = [offer.title for offer in offers]
-            device_infos: List[dict] = requests.post(f"{DEVICE_RECOGNIZER_API}/get-info", json={"texts": texts}).json()["info"]
+        texts = [offer.title for offer in offers]
+        device_infos: List[dict] = requests.post(f"{DEVICE_RECOGNIZER_API}/get-info", json={"texts": texts}).json()["info"]
 
-            group(create_device.s(offer, DeviceCreate(name=device_info["model"] or "_NO_DEVICE")) for offer, device_info in zip(offers, device_infos))()
+        group(create_device.s(offer, DeviceCreate(name=device_info["model"] or "_NO_DEVICE")) for offer, device_info in zip(offers, device_infos))()
 
-        except requests.exceptions.ConnectionError:
-            raise TaskFailed("Could not connect to the device recognizer API")
+    except requests.exceptions.ConnectionError:
+        raise TaskFailed("Could not connect to the device recognizer API")
 
 
 @app.task()
