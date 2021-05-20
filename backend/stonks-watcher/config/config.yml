@@ -1,0 +1,14 @@
+api_url: http://stonks-api:8000
+device_recognizer_api: http://device-recognizer-api:8010/api/v1
+offers:
+  update_interval: 1
+  update_older_than: 1440
+  update_device_info_interval: 1
+  update_device_info: 1440
+prices:
+  update_interval: 1
+  update_count: 6
+  update_older_than: 7
+stonks:
+  interval: 1
+  older_than: 30

@@ -10,8 +10,6 @@ COPY ./device-recognizer-api ./
 
 ENV ENV=production
 
-RUN chmod +x ./scripts/start.sh
-
 EXPOSE 8010
 
-CMD ["./scripts/start.sh"]
+CMD ["pipenv", "run", "start"]

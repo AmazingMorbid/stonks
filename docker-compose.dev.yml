@@ -1,21 +1,68 @@
 version: "3.8"
 
 services:
-  stonks-api:
+  api:
     build:
       context: .
-      dockerfile: ./docker/stonks-api.dev.Dockerfile
+      dockerfile: ./docker/backend.dev.Dockerfile
     container_name: stonks-api
+    command: |
+      ../scripts/start.dev.api.sh
     ports:
     - 8000:8000
     depends_on:
-    - stonks-database
+    - database
     volumes:
-    - ./stonks-api:/app/stonks-api
+    - ./backend/stonks-api:/app/backend/stonks-api
     environment:
-      - DATABASE_URL=postgresql://lomber:root@stonks-database:5432/stonks
+      - DATABASE_URL=postgresql://lomber:root@database:5432/stonks
 
-  stonks-database:
+  device-recognizer-api:
+    image: eu.gcr.io/stonks-307320/device-recognizer-api
+    container_name: device-recognizer-api
+    ports:
+    - 8010:8010
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./docker/backend.dev.Dockerfile
+    container_name: stonks-worker
+    command: |
+      ../scripts/start.dev.worker.sh
+    depends_on:
+      - broker
+      - api
+      - device-recognizer-api
+    volumes:
+      - ./backend/stonks-watcher:/app/backend/stonks-watcher
+
+#  scraper:
+#    build:
+#      context: .
+#      dockerfile: ./docker/backend.dev.Dockerfile
+#    container_name: stonks-scraper
+#    command: |
+#      ../scripts/start.dev.scraper.sh
+#    depends_on:
+#      - api
+#    environment:
+#      - STONKS_API_URL=http://stonks-api:8000
+
+  crud:
+    build:
+      context: .
+      dockerfile: ./docker/backend.dev.Dockerfile
+    container_name: stonks-crud
+    command: |
+      ../scripts/start.dev.crud.sh
+    depends_on:
+      - broker
+      - worker
+    volumes:
+      - ./backend/stonks-watcher:/app/backend/stonks-watcher
+
+  database:
     image: postgres:13
     container_name: stonks-database
     ports:
@@ -27,13 +74,18 @@ services:
     volumes:
     - postgres_data:/var/lib/postgresql/data
 
+  broker:
+    image: rabbitmq:3
+    container_name: stonks-broker
+
   adminer:
     image: adminer
     container_name: adminer
     depends_on:
-      - stonks-database
+      - database
     ports:
-    - 8080:8080
+      - 8080:8080
 
 volumes:
   postgres_data:
+

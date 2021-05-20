@@ -1,21 +1,21 @@
 FROM python:3.8-slim
 
-WORKDIR /app/stonks-api
-COPY ./stonks-api/Pipfile ./stonks-api/Pipfile.lock ./
+WORKDIR /app
+COPY Pipfile Pipfile.lock ./
 
-WORKDIR /app/stonks-types
-COPY ./stonks-types/ ./
+COPY ./libs ./libs
 
-WORKDIR /app/stonks-api
 RUN pip install pipenv && \
-    pipenv install --system --ignore-pipfile --dev
+    pipenv install --deploy --system --ignore-pipfile
 
-COPY ./stonks-api ./
+COPY ./backend/ ./backend
 
-ENV ENV=production
+WORKDIR /app/backend
 
-RUN chmod +x ./scripts/prestart.sh ./scripts/start.sh
+# Thanks to that, celery worker won't scream about root, duh
+RUN useradd --shell /bin/bash celery
+
+RUN chmod +x ./scripts/start-worker.sh ./scripts/start-beat.sh
 
 EXPOSE 80
 
-CMD ["./scripts/start.sh"]
