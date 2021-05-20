@@ -11,7 +11,7 @@ COPY Pipfile Pipfile.lock ./
 COPY ./libs/ ./libs/
 
 RUN pip install pipenv && \
-    pipenv install --deploy --system --ignore-pipfile
+    pipenv install --deploy --system --ignore-pipfile --dev
 
 COPY ./backend/ ./backend/
 
