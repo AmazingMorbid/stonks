@@ -37,17 +37,17 @@ services:
     volumes:
       - ./backend/stonks-watcher:/app/backend/stonks-watcher
 
-#  scraper:
-#    build:
-#      context: .
-#      dockerfile: ./docker/backend.dev.Dockerfile
-#    container_name: stonks-scraper
-#    command: |
-#      ../scripts/start.dev.scraper.sh
-#    depends_on:
-#      - api
-#    environment:
-#      - STONKS_API_URL=http://stonks-api:8000
+  scraper:
+    build:
+      context: .
+      dockerfile: ./docker/backend.dev.Dockerfile
+    container_name: stonks-scraper
+    command: |
+      ../scripts/start.dev.scraper.sh
+    depends_on:
+      - api
+    environment:
+      - STONKS_API_URL=http://stonks-api:8000
 
   crud:
     build:
