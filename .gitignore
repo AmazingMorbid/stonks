@@ -79,7 +79,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+backend/stonks-watcher/.env
 .env.test
 .env*.local
 
@@ -339,7 +339,7 @@ celerybeat.pid
 
 # Environments
 # .env
-.env/
+backend/stonks-watcher/.env/
 .venv/
 env/
 venv/

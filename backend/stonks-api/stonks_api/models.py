@@ -2,7 +2,8 @@ from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, Numeric, DateTime, ForeignKey, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base, relationship, backref
+from sqlalchemy.orm.collections import attribute_mapped_collection
 
 Base = declarative_base()
 
@@ -81,6 +82,7 @@ class Device(Base):
     __tablename__ = "device"
 
     name = Column(String, primary_key=True, nullable=False)
+    category = Column(String)
     last_price_update = Column(DateTime)
 
     price = relationship("Price", back_populates="device")
@@ -97,3 +99,15 @@ class Price(Base):
     currency = Column(String(3), nullable=False)
     date = Column(DateTime, nullable=False, default=datetime.utcnow())
     device = relationship("Device", back_populates="price")
+
+
+class Category(Base):
+    __tablename__ = "category"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    parent_id = Column(Integer, ForeignKey("category.id"), nullable=True)
+    children = relationship("Category",
+                            cascade="all",
+                            backref=backref("parent", remote_side="Category.id"),
+                            collection_class=attribute_mapped_collection("name"))

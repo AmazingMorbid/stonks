@@ -9,11 +9,12 @@ services:
     command: |
       ../scripts/start.dev.api.sh
     ports:
-    - 8000:8000
+      - 8000:8000
     depends_on:
-    - database
+      - database
     volumes:
-    - ./backend/stonks-api:/app/backend/stonks-api
+      - ./backend/stonks-api:/app/backend/stonks-api
+      - ./libs:/app/libs
     environment:
       - DATABASE_URL=postgresql://lomber:root@database:5432/stonks
 
@@ -21,7 +22,7 @@ services:
     image: device-recognizer-api:dev
     container_name: device-recognizer-api
     ports:
-    - 8010:8010
+      - 8010:8010
 
   worker:
     build:
@@ -35,19 +36,23 @@ services:
       - api
       - device-recognizer-api
     volumes:
+      - ./libs:/app/libs
       - ./backend/stonks-watcher:/app/backend/stonks-watcher
 
-  # scraper:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/backend.dev.Dockerfile
-  #   container_name: stonks-scraper
-  #   command: |
-  #     ../scripts/start.dev.scraper.sh
-  #   depends_on:
-  #     - api
-  #   environment:
-  #     - STONKS_API_URL=http://stonks-api:8000
+#  scraper:
+#    build:
+#      context: .
+#      dockerfile: ./docker/backend.dev.Dockerfile
+#    container_name: stonks-scraper
+#    command: |
+#      ../scripts/start.dev.scraper.sh
+#    depends_on:
+#      - api
+#    environment:
+#      - STONKS_API_URL=http://stonks-api:8000
+#    volumes:
+#      - ./backend/stonks-scraper:/app/backend/stonks-scraper
+#      - ./libs:/app/libs
 
   crud:
     build:
@@ -60,19 +65,20 @@ services:
       - broker
       - worker
     volumes:
+      - ./libs:/app/libs
       - ./backend/stonks-watcher:/app/backend/stonks-watcher
 
   database:
     image: postgres:13
     container_name: stonks-database
     ports:
-    - 5432:5432
+      - 5432:5432
     environment:
-    - POSTGRES_USER=lomber
-    - POSTGRES_PASSWORD=root
-    - POSTGRES_DB=stonks
+      - POSTGRES_USER=lomber
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=stonks
     volumes:
-    - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   broker:
     image: rabbitmq:3

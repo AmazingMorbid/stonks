@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 import requests
 from celery import group
@@ -94,8 +94,8 @@ def periodic_get_device_info():
 
         texts = [offer.title for offer in offers]
         device_infos: List[dict] = requests.post(f"{DEVICE_RECOGNIZER_API}/get-info", json={"texts": texts}).json()["info"]
-
-        group(create_device.s(offer, DeviceCreate(name=device_info["model"] or "_NO_DEVICE")) for offer, device_info in zip(offers, device_infos))()
+        group(create_device.s(offer, DeviceCreate(name=get_device_name(device_info),
+                                                  category=offer.category)) for offer, device_info in zip(offers, device_infos))()
 
     except requests.exceptions.ConnectionError:
         raise TaskFailed("Could not connect to the device recognizer API")
@@ -139,3 +139,13 @@ def create_device(offer: Offer, device: DeviceCreate):
         return offer
     except requests.exceptions.ConnectionError:
         raise TaskFailed("Could not connect to the device recognizer API")
+
+
+def get_device_name(device_info: dict):
+    model: Optional[str] = device_info["model"]
+
+    if model is not None and len(model) > 2:
+        return model
+
+    else:
+        return "_no_device"

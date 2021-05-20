@@ -28,7 +28,7 @@ class Price(PriceBase):
 
 class DeviceBase(BaseModel):
     name: str = Field(..., min_length=3, example="pixel 3a")
-
+    category: Optional[str] = Field(None, min_length=3, example="smartphones/google")
 
 class DeviceCreate(DeviceBase):
     # price: Optional[List[PriceCreate]] = None

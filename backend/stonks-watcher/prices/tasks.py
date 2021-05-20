@@ -51,7 +51,7 @@ def get_allegro_prices(device: Device) -> List[PriceCreate]:
     :param device: The device you are looking for a price for.
     :return: List of PriceCreate used in stonks-api.
     """
-    allegro_offers = allegro.offers.listing(**{"category.id": 165,
+    allegro_offers = allegro.offers.listing(**{"category.id": category_stonks_to_allegro(device.category),
                                                "phrase": device.name,
                                                "include": ["-all", "items"],
                                                "sellingMode.format": "BUY_NOW",
@@ -91,3 +91,34 @@ def update_device_prices(prices: List[PriceCreate], device: Device):
         return r.json()
     except requests.exceptions.ConnectionError as e:
         logging.error("Could not connect to the API")
+
+
+def category_stonks_to_allegro(category_id):
+    stonks_to_allegro_categories = {
+        "smartphones/samsung": 435,
+        "smartphones/alcatel": 4937,
+        "smartphones/htc": 16618,
+        "smartphones/huawei": 125154,
+        "smartphones/iphone": 48978,
+        "smartphones/lenovo": 257646,
+        "smartphones/lg": 10539,
+        "smartphones/maxcom": 257179,
+        "smartphones/microsoft": 250942,
+        "smartphones/myphone": 70568,
+        "smartphones/nokia": 4978,
+        "smartphones/sony": 121183,
+        "smartphones/sony_ericsson": 5044,
+        "smartphones/motorola": 146538,
+        "smartphones/xiaomi": 249462,
+        "smartphones/other": 165,
+        "tablets": 89253,
+        "laptops": 491,
+        "consoles": 122233,
+        "printers": 4578,
+        "monitors": 260017,
+        "mice_and_keyboards": 4564,
+        "routers": 4413,
+        "computer_parts": 4226,
+    }
+
+    return stonks_to_allegro_categories[category_id]

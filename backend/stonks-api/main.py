@@ -9,6 +9,7 @@ from logger import InterceptHandler
 from stonks_api.api.v1.api import api_router
 from starlette.routing import Match
 
+from stonks_api.database import create_no_device
 
 DEBUG = True if os.getenv("ENV", "production") == "development" else False
 app = FastAPI(debug=DEBUG)
@@ -39,6 +40,11 @@ async def log_middle(request: Request):
 
     logger.debug("Body:")
     logger.debug(await request.body())
+
+
+@app.on_event("startup")
+async def on_startup():
+    create_no_device()
 
 
 @app.get("/")
