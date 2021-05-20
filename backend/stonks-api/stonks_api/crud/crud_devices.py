@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional, List
-
+from loguru import logger
 from sqlalchemy.orm import Session
 from stonks_types import schemas
 
@@ -10,6 +10,7 @@ from stonks_api.crud.crud import CrudBase
 
 class CrudDevice(CrudBase[models.Device, schemas.DeviceCreate, schemas.DeviceUpdate]):
     def get_one_by_name(self, db: Session, name: str) -> Optional[models.Device]:
+        logger.debug(f"Getting device with name={name}")
         return db.query(models.Device).filter((models.Device.name == name) &
                                               (models.Device.name != "_no_device")).first()
 

@@ -11,7 +11,7 @@ app.config_from_object("config.celeryconfig")
 app.conf.beat_schedule = {
     "Periodic-prices-update": {
         "task": "prices.tasks.periodic_prices_update",
-        "schedule": config["prices"]["update_interval"] * 60,
+        "schedule": config["prices"]["update_interval"],
         "args": ()
     },
     "Periodic-offers-update": {
@@ -19,7 +19,6 @@ app.conf.beat_schedule = {
         "schedule": config["offers"]["update_interval"] * 60,
         "args": ()
     },
-    # TODO: Make this work
     "Periodic_get_device_info": {
         "task": "offers.tasks.periodic_get_device_info",
         "schedule": config["offers"]["update_device_info_interval"] * 60,

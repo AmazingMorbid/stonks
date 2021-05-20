@@ -36,6 +36,7 @@ def create_device(device: schemas.DeviceCreate,
                   db: Session = Depends(get_db)):
     db_device = crud.device.get_one_by_name(db=db,
                                             name=device.name.lower())
+
     if db_device is not None:
         raise HTTPException(status_code=409,
                             detail="Device already exists.")
