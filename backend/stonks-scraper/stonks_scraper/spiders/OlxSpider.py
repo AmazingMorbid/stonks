@@ -95,7 +95,7 @@ class OlxSpider(scrapy.Spider):
 
             if offer_id is None:
                 self.logger.critical("Offer id is None.")
-                return
+                continue
 
             if is_offer_already_scraped(offer_id):
                 self.logger.info(f"Offer is already scraped. <id={offer_id}>")

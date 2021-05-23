@@ -53,6 +53,8 @@ services:
     volumes:
       - ./backend/stonks-scraper:/app/backend/stonks-scraper
       - ./libs:/app/libs
+    ports:
+      - 6023:6023
 
   crud:
     build:

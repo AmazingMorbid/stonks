@@ -1,12 +1,11 @@
 import logging
 import statistics
 from datetime import datetime
-from pprint import pprint
 from typing import List
 
 import requests
 from pydantic import parse_obj_as
-from stonks_types.schemas import Offer, Price, Prices, StonksCreate, FeeCreate, OfferUpdate
+from stonks_types.schemas import Offer, Price, StonksCreate, FeeCreate, OfferUpdate
 
 from celeryapp import app
 from config.config import API_URL, config
@@ -43,6 +42,7 @@ fees = {
         "computer_parts": 0.030,
     },
 }
+
 
 @app.task
 def periodic_stonks_finder():

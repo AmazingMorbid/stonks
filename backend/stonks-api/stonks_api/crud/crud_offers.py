@@ -27,7 +27,7 @@ class CrudOffers(CrudBase[models.Offer, schemas.OfferCreate, schemas.OfferUpdate
         if has_device:
             q = q.filter((models.Offer.device_name != None) & (models.Offer.device_name != "_no_device"))
         else:
-            q = q.filter((models.Offer.device_name == None) & (models.Offer.device_name == "_no_device"))
+            q = q.filter((models.Offer.device_name == None) | (models.Offer.device_name == "_no_device"))
 
         if scraped_before is not None:
             q = q.filter(models.Offer.scraped_at <= scraped_before)
