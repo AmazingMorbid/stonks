@@ -60,24 +60,6 @@ class Offer(Base):
     last_stonks_check = Column(DateTime)
 
 
-class Stonks(Base):
-    __tablename__ = "stonks"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-
-    offer_id = Column(String, ForeignKey("offer.id", ondelete="CASCADE"), nullable=False)
-    offer = relationship("Offer", uselist=False)
-
-    fees = relationship("Fee", back_populates="stonks")
-
-    low_price = Column(Numeric(15, 4), nullable=False)
-    high_price = Column(Numeric(15, 4), nullable=False)
-    average_price = Column(Numeric(15, 4), nullable=False)
-    median_price = Column(Numeric(15, 4), nullable=False)
-    harmonic_price = Column(Numeric(15, 4), nullable=False)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-
-
 class Device(Base):
     __tablename__ = "device"
 
@@ -111,3 +93,17 @@ class Category(Base):
                             cascade="all",
                             backref=backref("parent", remote_side="Category.id"),
                             collection_class=attribute_mapped_collection("name"))
+
+
+class Stonks(Base):
+    __tablename__ = "stonks"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    stonks_amount = Column(Numeric(15, 4), nullable=False)
+
+    offer_id = Column(String, ForeignKey("offer.id", ondelete="CASCADE"), nullable=False)
+    offer = relationship("Offer", uselist=False)
+    fees = relationship("Fee", back_populates="stonks")
+
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    is_active = Column(Boolean, nullable=False, default=True)

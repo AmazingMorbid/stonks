@@ -11,11 +11,7 @@ fees: List[schemas.FeeCreate] = [
                       amount=10.5,
                       currency="PLN"),
 ]
-stonks_create: schemas.StonksCreate = schemas.StonksCreate(low_price=200,
-                                                           high_price=400,
-                                                           average_price=200,
-                                                           median_price=210,
-                                                           harmonic_price=190,
+stonks_create: schemas.StonksCreate = schemas.StonksCreate(stonks_amount=100,
                                                            fees=fees)
 
 

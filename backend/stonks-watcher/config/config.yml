@@ -10,4 +10,4 @@ prices:
   update_older_than: 7
 stonks:
   interval: 1
-  older_than: 30
+  older_than: 1440

@@ -19,16 +19,15 @@ class CrudOffers(CrudBase[models.Offer, schemas.OfferCreate, schemas.OfferUpdate
                  scraped_after: Optional[datetime] = None,
                  last_stonks_check_before: Optional[datetime] = None,
                  has_device: Optional[bool] = None,
-                 is_active: Optional[bool] = True,
+                 is_active: bool = True,
                  ) -> List[models.Offer]:
         q = db.query(models.Offer)
         q = q.filter(models.Offer.is_active == is_active)
 
-        if has_device is not None:
-            if has_device:
-                q = q.filter(models.Offer.device_name != None)
-            else:
-                q = q.filter(models.Offer.device_name == None)
+        if has_device:
+            q = q.filter((models.Offer.device_name != None) & (models.Offer.device_name != "_no_device"))
+        else:
+            q = q.filter((models.Offer.device_name == None) & (models.Offer.device_name == "_no_device"))
 
         if scraped_before is not None:
             q = q.filter(models.Offer.scraped_at <= scraped_before)
@@ -88,6 +87,15 @@ class CrudOffers(CrudBase[models.Offer, schemas.OfferCreate, schemas.OfferUpdate
         return super(CrudOffers, self).update(db=db,
                                               id=id,
                                               update_model=update_dict)
+
+    def update_stonks_check_date(self,
+                                 db: Session,
+                                 id: str):
+        return super().update(db=db,
+                              id=id,
+                              update_model={
+                                  "last_stonks_check": datetime.utcnow(),
+                              })
 
 
 offer = CrudOffers(models.Offer)

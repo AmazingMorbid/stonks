@@ -39,20 +39,20 @@ services:
       - ./libs:/app/libs
       - ./backend/stonks-watcher:/app/backend/stonks-watcher
 
-#  scraper:
-#    build:
-#      context: .
-#      dockerfile: ./docker/backend.dev.Dockerfile
-#    container_name: stonks-scraper
-#    command: |
-#      ../scripts/start.dev.scraper.sh
-#    depends_on:
-#      - api
-#    environment:
-#      - STONKS_API_URL=http://stonks-api:8000
-#    volumes:
-#      - ./backend/stonks-scraper:/app/backend/stonks-scraper
-#      - ./libs:/app/libs
+  scraper:
+    build:
+      context: .
+      dockerfile: ./docker/backend.dev.Dockerfile
+    container_name: stonks-scraper
+    command: |
+      ../scripts/start.dev.scraper.sh
+    depends_on:
+      - api
+    environment:
+      - STONKS_API_URL=http://stonks-api:8000
+    volumes:
+      - ./backend/stonks-scraper:/app/backend/stonks-scraper
+      - ./libs:/app/libs
 
   crud:
     build:

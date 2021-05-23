@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -20,9 +20,10 @@ def stonks_not_found(stonks):
 @router.get("/stonks", response_model=List[schemas.Stonks])
 def get_stonks_list(skip: int = 0,
                     limit: int = 50,
+                    is_active: Optional[bool] = True,
                     sort: schemas.StonksSortBy = schemas.StonksSortBy.stonks_amount_desc,
                     db: Session = Depends(get_db)):
-    db_stonkses = crud_stonks.get_many(db=db,
+    db_stonkses = crud.stonks.get_many(db=db,
                                        skip=skip,
                                        limit=limit)
 
@@ -32,7 +33,7 @@ def get_stonks_list(skip: int = 0,
 @router.get("/stonks/{stonks_id}", response_model=schemas.Stonks)
 def get_stonks(stonks_id: int,
                db: Session = Depends(get_db)):
-    db_stonks = crud_stonks.get_one(db=db, stonks_id=stonks_id)
+    db_stonks = crud.stonks.get_one(db=db, id=stonks_id)
     stonks_not_found(db_stonks)
 
     return db_stonks
@@ -45,9 +46,9 @@ def create_stonks(offer_id: str,
     offer = crud.offer.get_one(db=db, id=offer_id)
     offer_not_found(offer)
 
-    db_stonks = crud_stonks.create(db=db,
-                                   offer_id=offer_id,
-                                   stonks=stonks)
+    db_stonks = crud.stonks.create_for_offer(db=db,
+                                             offer_id=offer_id,
+                                             stonks=stonks)
 
     return db_stonks
 
@@ -62,9 +63,9 @@ def create_stonks(offer_id: str,
 @router.delete("/stonks/{stonks_id}")
 def delete_stonks(stonks_id: int,
                   db: Session = Depends(get_db)):
-    stonks = crud_stonks.get_one(db=db, stonks_id=stonks_id)
+    stonks = crud.stonks.get_one(db=db, id=stonks_id)
     stonks_not_found(stonks)
 
-    crud_stonks.delete_one(db=db, stonks_id=stonks_id)
+    crud.stonks.remove(db=db, id=stonks_id)
 
     return {"detail": "Stonks has been deleted."}

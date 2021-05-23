@@ -11,6 +11,10 @@ class FeeCreate(FeeBase):
     pass
 
 
+class FeeUpdate(FeeBase):
+    pass
+
+
 class Fee(FeeBase):
     id: int
 

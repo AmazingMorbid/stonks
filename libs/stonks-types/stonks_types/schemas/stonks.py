@@ -9,22 +9,21 @@ from stonks_types.schemas import Offer, Fee, FeeCreate
 
 
 class StonksBase(BaseModel):
-    low_price: float = Field(...)
-    high_price: float = Field(...)
-    average_price: float = Field(...)
-    median_price: float = Field(...)
-    harmonic_price: float = Field(...)
+    stonks_amount: float
 
 
 class StonksCreate(StonksBase):
-    fees: List[FeeCreate]
-    created_at: datetime = datetime.utcnow()
+    fees: List[FeeCreate] = []
+
+
+class StonksUpdate(StonksBase):
+    pass
 
 
 class Stonks(StonksBase):
     id: int
-    offer: Offer
     fees: List[Fee]
+    offer: Offer
     created_at: datetime
 
     class Config:
