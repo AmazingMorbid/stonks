@@ -100,6 +100,7 @@ class Safedeal(BaseModel):
 
 class Status(str, Enum):
     active = "active"
+    outdated = "outdated"
     disabled = "disabled"
     removed_by_user = "removed_by_user"
     moderated = "moderated"
