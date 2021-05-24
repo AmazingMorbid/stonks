@@ -38,6 +38,6 @@ if SENTRY_DSN is not None:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[CeleryIntegration()],
-        sample_rate=0.2,
+        sample_rate=0.1,
         environment=os.getenv("ENV", "development")
     )
