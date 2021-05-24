@@ -57,15 +57,16 @@ def periodic_stonks_finder():
     r = requests.get(f"{API_URL}/v1/offers",
                      params=params)
     offers: List[Offer] = parse_obj_as(List[Offer], r.json())
-    print(f"Downloaded {len(offers)} offers with outdated stonks.")
+    logger.info(f"Downloaded {len(offers)} offers with outdated stonks.")
 
     for offer in offers:
-        print(offer.title, offer.device.name)
         find_stonks(offer)
 
 
 @app.task
 def find_stonks(offer: Offer):
+    logger.info(f"Looking for stonks for offer id={offer.id}")
+
     # Get prices for device
     prices = get_prices(offer.device.name)
 
