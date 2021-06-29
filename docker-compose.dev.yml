@@ -19,7 +19,9 @@ services:
       - DATABASE_URL=postgresql://lomber:root@database:5432/stonks
 
   device-recognizer-api:
-    image: device-recognizer-api:dev
+    build:
+      context: .
+      dockerfile: ./docker/device-recognizer-api.prod.Dockerfile
     container_name: device-recognizer-api
     ports:
       - 8010:8010
