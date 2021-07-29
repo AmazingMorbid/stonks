@@ -1,5 +1,4 @@
 # stonks
-## Project is dead
 
 ## Story
 I started earning some extra money by repairing smartphones.
